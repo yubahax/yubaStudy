@@ -20,6 +20,7 @@ public class myController {
     public String login() {
         Logger logger =  LoggerFactory.getLogger(myController.class);
         logger.info("用户访问了一次登陆界面");
+        System.out.println("hell word!");
         return "login";
     }
 
