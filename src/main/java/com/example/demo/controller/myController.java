@@ -16,16 +16,16 @@ import javax.annotation.Resource;
 public class myController {
     @Resource
     StringRedisTemplate stringRedisTemplate;
-    @RequestMapping("/index")
-    public String index() {
-        return "index";
-    }
+//    @RequestMapping("/index")
+//    public String index() {
+//        return "index";
+//    }
     @RequestMapping("/login")
     public String login() {
         Logger logger =  LoggerFactory.getLogger(myController.class);
         logger.info("用户访问了一次登陆界面");
         System.out.println("hell word!");
-        return "login";
+        return "Login";
     }
 
 }
