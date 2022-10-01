@@ -10,10 +10,10 @@ import javax.persistence.*;
 //@Table(name = "Item")    //对应的数据库中表名称
 public class Item {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   //生成策略，这里配置为自增
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)   //生成策略，这里配置为自增
 //    @Column(name = "id")    //对应表中id这一列
 //    @Id     //此属性为主键
-    int id;
+//    int id;
 
 //    @Column(name = "username")   //对应表中username这一列
     String username;

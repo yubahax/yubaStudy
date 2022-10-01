@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/static/css/Login.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.staticfile.org/vue/2.6.9/vue.js"></script>
-
+     <script src="../static/js/login.js"></script>
 </head>
 <body>
      <div id="app" class="container">
@@ -60,43 +60,50 @@
        </div>
      </div>
 </body>
-
 <script>
     new Vue({
-        el: '#app',
-        data: {
-            active : 'login',
-            registerFrom:{
-                email :'',
-                Username :'',
-                Password :'',
-                repeat :''
-            },
-            loginFrom:{
-                Username :'',
-                Password :''
-            }
+    el: '#app',
+    data: {
+        active : 'login',
+        registerFrom:{
+            email :'',
+            Username :'',
+            Password :'',
+            repeat :''
         },
-        methods :{
-            jo(){
-
-            },
-            go(type){
-                this.active = type
-            },
-            submit(){
-                if(this.active === 'login'){
-                    const  i = axios.get("www.baidu.com")
-                    console.log(i)
-                    console.log('login',this.loginFrom)
-
-                }
-                if(this.active === 'register'){
-                    console.log('register',this.registerFrom)
-                }
+        loginFrom:{
+            Username :'',
+            Password :''
+        }
+    },
+    methods :{
+        go(type){
+            this.active = type
+        },
+        submit(){
+            if(this.active === 'login'){
+                axios({
+                    //请求方式
+                    method:'post',
+                    //后端接口路径
+                    url:'/index',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        //attributeName为属性名，value为属性值
+                       name:this.loginFrom.Username,
+                        password:this.loginFrom.Password
+                    }
+                }).then((response) => {
+                    //response是一个返回的promise对象，该注释所在的这行一般对该promise对象进行处理从而获取数据
+                }).catch((error) => {
+                    //对error进行处理
+                });
+            }
+            if(this.active === 'register'){
+                console.log('register',this.registerFrom)
             }
         }
-    })
+    }
+})
 </script>
-
 </html>
