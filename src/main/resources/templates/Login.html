@@ -23,6 +23,7 @@
              <div class="form" id="fromLogin">
 <!--             如果按钮选择的是注册则展示这个界面的内容-->
                  <template v-if="active === 'register'">
+<!--                     <form action="/api/register" method="post">-->
                      <div class="input">
                          <input :class="{hasvalue : registerFrom.email}" v-model="registerFrom.email" type="text" name="email" id="email">
                          <label for="email">邮箱</label>
@@ -39,19 +40,22 @@
                          <input :class="{hasvalue : registerFrom.repeat}" v-model="registerFrom.repeat" type="text" name="Passwordrepeat" id="Passwordrepeat">
                          <label for="email">确认密码</label>
                      </div>
-                     <button type="submit" @click="submit">注册</button>
+                     <button @click = "submit">注册</button>
+<!--                     </form>-->
                  </template>
 <!--                 如果按钮选择的是登录则展示这个界面的内容-->
                  <template v-if="active === 'login'">
+                    <form action="/do" method="post">
                      <div class="input">
-                         <input :class="{hasvalue : loginFrom.Username}" v-model="loginFrom.Username" type="text" name="Username" id="loginUsername">
+                         <input :class="{hasvalue : loginFrom.Username}" v-model="loginFrom.Username" type="text" name="username" id="loginUsername">
                          <label for="email">用户名</label>
                      </div>
                      <div class="input">
-                         <input :class="{hasvalue : loginFrom.Password}" v-model="loginFrom.Password" type="text" name="Password" id="loginPassword">
+                         <input :class="{hasvalue : loginFrom.Password}" v-model="loginFrom.Password" type="text" name="password" id="loginPassword">
                          <label for="email">密码</label>
                      </div>
-                     <button type="submit" @click="submit">登录</button>
+                     <button>登录</button>
+                    </form>
                  </template>
                  <span>忘记密码?</span>
 
@@ -86,7 +90,7 @@
                     //请求方式
                     method:'post',
                     //后端接口路径
-                    url:'/index',
+                    url:'/do',
                     //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
                     params: {
                         //attributeName为属性名，value为属性值
@@ -94,13 +98,32 @@
                         password:this.loginFrom.Password
                     }
                 }).then((response) => {
-                    //response是一个返回的promise对象，该注释所在的这行一般对该promise对象进行处理从而获取数据
+                    console.log(response.data.username)
                 }).catch((error) => {
                     //对error进行处理
                 });
             }
             if(this.active === 'register'){
-                console.log('register',this.registerFrom)
+                axios({
+                    //请求方式
+                    method:'post',
+                    //后端接口路径
+                    url:'/api/register',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        //attributeName为属性名，value为属性值
+                        username:this.registerFrom.Username,
+                        password:this.registerFrom.Password
+                    }
+                }).then((response) => {
+                    if (response.data === false) {
+                        alert("false")
+                    } else {
+                        this.active = 'login'
+                    }
+                }).catch((error) => {
+                    //对error进行处理
+                });
             }
         }
     }
