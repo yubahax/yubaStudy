@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录</title>
-  <link rel="stylesheet" href="/static/css/Login.css">
+  <link rel="stylesheet" href="../static/css/Login.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.staticfile.org/vue/2.6.9/vue.js"></script>
      <script src="../static/js/login.js"></script>
 </head>
 <body>
      <div id="app" class="container">
-       <img src="/static/img/bg.jpg" alt="">
+       <img src="../static/img/bg.jpg" alt="">
        <div class="panel">
           <div class="content login">
              <div class="switch">
@@ -25,19 +25,19 @@
                  <template v-if="active === 'register'">
 <!--                     <form action="/api/register" method="post">-->
                      <div class="input">
-                         <input :class="{hasvalue : registerFrom.email}" v-model="registerFrom.email" type="text" name="email" id="email">
+                         <input :class="{hasValue : registerFrom.email}" v-model="registerFrom.email" type="text" name="email" id="email">
                          <label for="email">邮箱</label>
                      </div>
                      <div class="input">
-                         <input :class="{hasvalue : registerFrom.Username}" v-model="registerFrom.Username" type="text" name="Username" id="Username">
+                         <input :class="{hasValue : registerFrom.Username}" v-model="registerFrom.Username" type="text" name="Username" id="Username">
                          <label for="email">用户名</label>
                      </div>
                      <div class="input">
-                         <input :class="{hasvalue : registerFrom.Password}" v-model="registerFrom.Password" type="text" name="Password" id="Password">
+                         <input :class="{hasValue : registerFrom.Password}" v-model="registerFrom.Password" type="text" name="Password" id="Password">
                          <label for="email">密码</label>
                      </div>
                      <div class="input">
-                         <input :class="{hasvalue : registerFrom.repeat}" v-model="registerFrom.repeat" type="text" name="Passwordrepeat" id="Passwordrepeat">
+                         <input :class="{hasValue : registerFrom.repeat}" v-model="registerFrom.repeat" type="text" name="Passwordrepeat" id="Passwordrepeat">
                          <label for="email">确认密码</label>
                      </div>
                      <button @click = "submit">注册</button>
@@ -47,11 +47,11 @@
                  <template v-if="active === 'login'">
                     <form action="/do" method="post">
                      <div class="input">
-                         <input :class="{hasvalue : loginFrom.Username}" v-model="loginFrom.Username" type="text" name="username" id="loginUsername">
+                         <input :class="{hasValue : loginFrom.Username}" v-model="loginFrom.Username" type="text" name="username" id="loginUsername">
                          <label for="email">用户名</label>
                      </div>
                      <div class="input">
-                         <input :class="{hasvalue : loginFrom.Password}" v-model="loginFrom.Password" type="text" name="password" id="loginPassword">
+                         <input :class="{hasValue : loginFrom.Password}" v-model="loginFrom.Password" type="text" name="password" id="loginPassword">
                          <label for="email">密码</label>
                      </div>
                      <button>登录</button>
