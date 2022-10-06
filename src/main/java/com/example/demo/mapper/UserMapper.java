@@ -15,6 +15,6 @@ public interface UserMapper extends BaseMapper<UserDetil> {
     @Select("select * from user where name = #{name}")
     UserDetil selectByName(@Param("name") String name);
 
-    @Insert("insert into user(name,password,role) values(#{name},#{password},#{role})")
+    @Insert("insert into user(name,password,role,email) values(#{name},#{password},#{role},#{email})")
     void saveUser(UserDetil userDetil);
 }

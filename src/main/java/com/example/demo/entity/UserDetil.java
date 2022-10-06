@@ -13,9 +13,11 @@ public class UserDetil {
     String password;
     String role;
 
-    public UserDetil(String name, String password, String role) {
+    String email;
+    public UserDetil(String name, String password, String role,String email) {
         this.name = name;
         this.password = password;
         this.role = role;
+        this.email = email;
     }
 }

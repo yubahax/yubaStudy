@@ -85,24 +85,6 @@
             this.active = type
         },
         submit(){
-            if(this.active === 'login'){
-                axios({
-                    //请求方式
-                    method:'post',
-                    //后端接口路径
-                    url:'/do',
-                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
-                    params: {
-                        //attributeName为属性名，value为属性值
-                       name:this.loginFrom.Username,
-                        password:this.loginFrom.Password
-                    }
-                }).then((response) => {
-                    console.log(response.data.username)
-                }).catch((error) => {
-                    //对error进行处理
-                });
-            }
             if(this.active === 'register'){
                 axios({
                     //请求方式
@@ -113,7 +95,8 @@
                     params: {
                         //attributeName为属性名，value为属性值
                         username:this.registerFrom.Username,
-                        password:this.registerFrom.Password
+                        password:this.registerFrom.Password,
+                        email:this.registerFrom.email
                     }
                 }).then((response) => {
                     if (response.data === false) {

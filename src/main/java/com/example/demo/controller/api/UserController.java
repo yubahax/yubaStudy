@@ -19,12 +19,8 @@ public class UserController {
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
-    public String register(@RequestParam("username")String name,@RequestParam("password")String password) {
-        if(service.userRegister(new UserDetil(name,new BCryptPasswordEncoder().encode(password),"user"))){
-        return "true";
-        } else {
-            return "false";
-        }
+    public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email) {
+        return service.userRegister(new UserDetil(name, new BCryptPasswordEncoder().encode(password), "user", email));
     }
 
 }
