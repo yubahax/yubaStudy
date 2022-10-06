@@ -6,4 +6,8 @@ public interface UserService {
 
     public boolean userRegister(UserDetil userDetil);
 
+    public void sendVerifyCode(String email);
+
+    public  boolean verfiyCodeIsTrue(String email,String code);
+
 }

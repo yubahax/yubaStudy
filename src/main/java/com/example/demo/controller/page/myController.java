@@ -1,12 +1,17 @@
 package com.example.demo.controller.page;
 
+import com.example.demo.entity.UserDetil;
 import lombok.Data;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 @Data
 @Controller
@@ -14,16 +19,10 @@ public class myController {
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
-
-
-//    @RequestMapping(value = "/index",method = RequestMethod.POST)
-//    @ResponseBody
-//    public Item index(@RequestParam("name") String name) {
-//        System.out.println(name);
-//        return  new Item("jojo","oo");
-//    }
     @RequestMapping("/index")
-    public String index() {
+    public String index(HttpSession session) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        System.out.println(context.getAuthentication().getName());
         return "index";
     }
 
