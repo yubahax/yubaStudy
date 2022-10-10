@@ -8,6 +8,6 @@ public interface UserService {
 
     public void sendVerifyCode(String email);
 
-    public  boolean verfiyCodeIsTrue(String email,String code);
+    public  boolean veriFyCodeIsTrue(String email,String code);
 
 }

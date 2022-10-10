@@ -1,11 +1,9 @@
 package com.example.demo.controller.page;
 
-import com.example.demo.entity.UserDetil;
+
 import lombok.Data;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,7 @@ public class myController {
 
     @RequestMapping("/index")
     public String index(HttpSession session) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        System.out.println(context.getAuthentication().getName());
+
         return "index";
     }
 

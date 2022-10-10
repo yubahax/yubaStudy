@@ -2,9 +2,7 @@ package com.example.demo.controller.api;
 
 import com.example.demo.entity.UserDetil;
 import com.example.demo.service.UserService;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 
 @Controller
 @RequestMapping("/api")
@@ -25,7 +22,7 @@ public class UserController {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
     public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("code") String code) {
-       if (service.verfiyCodeIsTrue(email,code)) {
+       if (service.veriFyCodeIsTrue(email,code)) {
            return service.userRegister(new UserDetil(name, new BCryptPasswordEncoder().encode(password), "user", email));
        } else {
            return false;

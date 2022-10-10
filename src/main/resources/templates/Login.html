@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../static/css/Login.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.staticfile.org/vue/2.6.9/vue.js"></script>
-     <script src="../static/js/login.js"></script>
+
 </head>
 <body>
      <div id="app" class="container">
@@ -27,6 +27,11 @@
                      <div class="input">
                          <input :class="{hasValue : registerFrom.email}" v-model="registerFrom.email" type="text" name="email" id="email">
                          <label for="email">邮箱</label>
+                         <button id="sendcod">发送验证码</button>
+                     </div>
+                     <div class="input">
+                         <input :class="{hasValue : registerFrom.pin}" v-model="registerFrom.pin" type="text" name="pin" id="pin">
+                         <label for="email">验证码</label>
                      </div>
                      <div class="input">
                          <input :class="{hasValue : registerFrom.Username}" v-model="registerFrom.Username" type="text" name="Username" id="Username">
@@ -53,7 +58,9 @@
                      <div class="input">
                          <input :class="{hasValue : loginFrom.Password}" v-model="loginFrom.Password" type="text" name="password" id="loginPassword">
                          <label for="email">密码</label>
+                         <img src="/api/kaptcha" width="5px" height="30px"/>
                      </div>
+
                      <button>登录</button>
                     </form>
                  </template>

@@ -12,7 +12,6 @@ public class UserDetil {
     String name;
     String password;
     String role;
-
     String email;
     public UserDetil(String name, String password, String role,String email) {
         this.name = name;

@@ -113,6 +113,14 @@ body{
     font-family: miaowu;
 }
 
+#sendcod{
+    width: 45px;
+    position: absolute;
+    margin: 0;
+    top: 0;
+
+}
+
 #live2dcanvas{
     border: 0 !important;
 }

@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private JavaMailSender sender;
 
     @Resource
-    StringRedisTemplate redisTemplate;
+    StringRedisTemplate stringRedisTemplate;
     @Override
     public boolean userRegister(UserDetil userDetil) {
         if (userMapper.selectByName(userDetil.getName()) == null) {
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         message.setSubject("[渝教育 智慧校园] 您的验证码");
         Random random = new Random();
         int code = random.nextInt(899999) + 100000;
-        redisTemplate.opsForValue().set("verify:code:" + email, code + "", 3, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set("verify:code:" + email, code + "", 3, TimeUnit.MINUTES);
         message.setText("您的验证码为：" + code + ",三分钟内有效，请及时完成注册!如果不是本人操作,请忽略");
         message.setTo(email);
         message.setFrom("571239193@qq.com");
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean verfiyCodeIsTrue(String email, String code) {
-        String string = redisTemplate.opsForValue().get("verify:code:" + email);
+    public boolean veriFyCodeIsTrue(String email, String code) {
+        String string = stringRedisTemplate.opsForValue().get("verify:code:" + email);
         if (string == null) return false;
         return code.equals(string);
     }
