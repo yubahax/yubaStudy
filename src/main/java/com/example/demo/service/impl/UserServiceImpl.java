@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.UserDetil;
+import com.example.demo.entity.Student;
+import com.example.demo.entity.User;
+import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -9,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -18,14 +21,21 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Resource
+    StudentMapper studentMapper;
+
+    @Resource
     private JavaMailSender sender;
 
     @Resource
     StringRedisTemplate stringRedisTemplate;
+
+
+
+
     @Override
-    public boolean userRegister(UserDetil userDetil) {
-        if (userMapper.selectByName(userDetil.getName()) == null) {
-            userMapper.saveUser(userDetil);
+    public boolean userRegister(User user) {
+        if (userMapper.selectByName(user.getName()) == null) {
+            userMapper.saveUser(user);
             return true;
         } else {
             return false;
@@ -46,9 +56,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean veriFyCodeIsTrue(String email, String code) {
+    public boolean verifiyCodeIsTrue(String email, String code) {
         String string = stringRedisTemplate.opsForValue().get("verify:code:" + email);
         if (string == null) return false;
         return code.equals(string);
     }
+
+    @Override
+    public boolean ifStudentInfoIsEXist(HttpSession session, String name) {
+        User user = (User) session.getAttribute("user");
+        Student student =  studentMapper.selectStudentById(user.getId());
+        if (student == null) {
+            return false;
+        } else {
+            session.setAttribute("student",student);
+            return true;
+        }
+    }
+
+    @Override
+    public User selectUserByName(String name) {
+        return userMapper.selectByName(name);
+
+    }
+
+    @Override
+    public void saveStudentInfo(Student student) {
+        studentMapper.insert(student);
+    }
+
+
 }
