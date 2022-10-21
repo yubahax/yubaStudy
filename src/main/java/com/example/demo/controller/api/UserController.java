@@ -1,37 +1,55 @@
 package com.example.demo.controller.api;
 
-import com.example.demo.entity.UserDetil;
+import com.example.demo.entity.Student;
+import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class UserController {
     @Resource
     UserService service;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    @ResponseBody
     public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("code") String code) {
-       if (service.veriFyCodeIsTrue(email,code)) {
-           return service.userRegister(new UserDetil(name, new BCryptPasswordEncoder().encode(password), "user", email));
+       if (service.verifiyCodeIsTrue(email,code)) {
+           return service.userRegister(new User(name, new BCryptPasswordEncoder().encode(password), "user", email));
        } else {
            return false;
        }
     }
 
     @RequestMapping("/sendEmail")
-    @ResponseBody
     public void sendEmail(@RequestParam("email") String email) {
         service.sendVerifyCode(email);
+    }
+
+    @RequestMapping(value = "/saveStudentInfo",method = RequestMethod.POST)
+    public void saveStudentInfo(@RequestParam("sid") int sid,
+                                @RequestParam("sname") String sname,
+                                @RequestParam("sex") String sex,
+                                @RequestParam("age") int age,
+                                @RequestParam("grade") int grade,
+                                @RequestParam("major") String major,
+                                @RequestParam("room") String room,HttpSession session) {
+        Student student = new Student();
+        User user = (User) session.getAttribute("user");
+        student.setAge(age);
+        student.setSex(sex);
+        student.setRoom(room);
+        student.setMajor(major);
+        student.setId(user.getId());
+        student.setSname(sname);
+        student.setSid(sid);
+        student.setGrade(grade);
+        service.saveStudentInfo(student);
     }
 }
