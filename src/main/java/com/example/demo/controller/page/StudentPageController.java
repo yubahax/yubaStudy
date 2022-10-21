@@ -32,6 +32,7 @@ public class StudentPageController {
         String name = authentication.getName();
         User user = userService.selectUserByName(name);
         session.setAttribute("user",user);
+        session.setAttribute("id",user.getId());
         if (user.getRole().equals("admin")) {return "admin";}
         if (userService.ifStudentInfoIsEXist(session,name)) {
             return "index";

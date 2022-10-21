@@ -12,14 +12,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class UserController {
     @Resource
     UserService service;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    @ResponseBody
     public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("code") String code) {
        if (service.verifiyCodeIsTrue(email,code)) {
            return service.userRegister(new User(name, new BCryptPasswordEncoder().encode(password), "user", email));
@@ -29,13 +28,11 @@ public class UserController {
     }
 
     @RequestMapping("/sendEmail")
-    @ResponseBody
     public void sendEmail(@RequestParam("email") String email) {
         service.sendVerifyCode(email);
     }
 
     @RequestMapping(value = "/saveStudentInfo",method = RequestMethod.POST)
-    @ResponseBody
     public void saveStudentInfo(@RequestParam("sid") int sid,
                                 @RequestParam("sname") String sname,
                                 @RequestParam("sex") String sex,
