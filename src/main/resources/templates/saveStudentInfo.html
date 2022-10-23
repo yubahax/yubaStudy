@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/css" src="../static/css/mu.css"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/saveStudentInfo.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id = "form">
+    <el-container>
+        <el-main style="margin-top: 50px">
+            <div style="width: 439px;height: 550px;margin:0 auto; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);text-align: center;">
+                <div style="font-size: large;color: #616161;padding-top: 1px"><h3>绑定学生信息</h3> <hr/></div>
+                <div >
+                    <br/>
+                    <el-form ref="form" :model="form" label-width="130px" >
+                        <el-form-item label="姓     名" style="" >
+                            <el-input v-model="form.name" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <el-form-item label="学     号">
+                            <el-input v-model="form.sid" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <el-form-item label="年     龄">
+                            <el-input-number v-model="form.age"  :min="1" :max="99" style = "width:200px" label="描述文字"></el-input-number>
+                        </el-form-item>
+                        <el-form-item label="性     别">
+                            <el-radio-group v-model="form.sex">
+                                <el-radio label="男"></el-radio>
+                                <el-radio label="女"></el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="年     级">
+                            <el-select v-model="form.grade" style = "width:200px" placeholder="请选择年级">
+                                <el-option label="大一" value="2022"></el-option>
+                                <el-option label="大二" value="2021"></el-option>
+                                <el-option label="大三" value="2020"></el-option>
+                                <el-option label="大四" value="2019"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="宿 舍 号">
+                            <el-input v-model="form.room" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <el-form-item label="专     业">
+                            <el-input v-model="form.major" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <!-- <el-form-item id="but">
+                            <el-button  @click="onSubmit" id="bc">保存</el-button>
+                            <el-button id="reset">重置</el-button>
+                        </el-form-item> -->
+                        <div class="bigbox">
+                            <div class="bc">
+                                <el-button  @click="onSubmit" class="bc">保存</el-button>
+                            </div>
+                            <div class="reset">
+                                <el-button class="reset">重置</el-button>
+                            </div>
+                        </div>
+                    </el-form>
+                </div>
+            </div>
+        </el-main>
+    </el-container>
+</div>
+
+</body>
+<script>
+
+    new Vue({
+        el:"#form",
+        data:{
+            form: {
+                name: '',
+                grade: '',
+                major: '',
+                age: '18',
+                sex: '',
+                sid: '',
+                room: '',
+            }
+        },
+        methods: {
+            onSubmit() {
+                axios({
+                    //请求方式
+                    method:'post',
+                    //后端接口路径
+                    url:'/api/saveStudentInfo',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        //attributeName为属性名，value为属性值
+                        name:this.form.name,
+                        grade: this.form.grade,
+                        major: this.form.major,
+                        age: this.form.age,
+                        sex: this.form.sex,
+                        sid: this.form.sid,
+                        room: this.form.room,
+                    }
+                }).then((response) => {
+                }).catch((error) => {
+                });
+            }
+        }
+
+    });
+</script>
+
+</html>
+

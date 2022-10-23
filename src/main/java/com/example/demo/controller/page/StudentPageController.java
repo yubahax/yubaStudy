@@ -37,20 +37,20 @@ public class StudentPageController {
         if (userService.ifStudentInfoIsEXist(session,name)) {
             return "index";
         } else {
-            return "redirect:/hi";
+            return "redirect:/saveInfo";
         }
     }
 
-    @RequestMapping("/hi")
+    @RequestMapping("/saveInfo")
     public String hi() {
-        return "hi";
+        return "saveStudentInfo";
     }
 
 
     @RequestMapping({"/login","/"})
     public String login() {
 
-        return "Login";
+        return "login";
     }
 
 }
