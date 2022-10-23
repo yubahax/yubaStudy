@@ -16,7 +16,7 @@ public interface StudentMapper extends BaseMapper<Student> {
             @Result(column = "sex", property = "sex"),
             @Result(column = "age", property = "age"),
             @Result(column = "room", property = "room"),
-            @Result(column = "major", property = "class"),
+            @Result(column = "class", property = "major"),
             @Result(column = "grade", property = "grade"),
             @Result(column = "id", property = "id"),
     })

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue -->
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- 引入jquery -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- 外层大盒子 -->
+    <div class="box" id="app">
+        <!-- 滑动盒子 -->
+        <div class="pre-box">
+            <h1>WELCOME</h1>
+            <p>JOIN US!</p>
+            <div class="img-box">
+                <img src="../static/img/waoku.jpg" alt="">
+            </div>
+        </div>
+        <!-- 注册盒子 -->
+        <div class="register-form">
+            <!-- 标题盒子 -->
+            <div class="title-box">
+                <h1>注册</h1>
+            </div>
+            <!-- 输入框盒子 -->
+            <div class="input-box">
+                <input type="text" placeholder="用户名" v-model="registerFrom.Username">
+                <input type="password" placeholder="密码" v-model="registerFrom.Password">
+                <input type="password" placeholder="确认密码" v-model="registerFrom.repeat">
+            </div>
+            <!-- 邮箱盒子 -->
+            <div class="email">
+                <input type="text" placeholder="邮箱" class="email_input" v-model="registerFrom.email">
+                <button class="sendcode" @click="sendCode">发送验证码</button>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="验证码" v-model="registerFrom.code">
+            </div>
+            <!-- 按钮盒子 -->
+            <div class="btn-box">
+                <button @click="register" >注册</button>
+                <p onclick="mySwitch()">已有账号?去登录</p>
+            </div>
+        </div>
+        <!-- 登录盒子 -->
+        <div class="login-form">
+            <div class="title-box">
+                <h1>登录</h1>
+            </div>
+            <form action="/do" method="post">
+            <div class="input-box">
+                <input type="text" placeholder="用户名" name = "username" v-model="loginFrom.Username">
+                <input type="password" placeholder="密码" name="password" v-model="loginFrom.Password">
+            </div>
+            <div class="btn-box">
+                <button>登录</button>
+                <p onclick="mySwitch()">没有账号?去注册</p>
+            </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    // 滑动的状态
+    let flag=true
+    const mySwitch=()=>{
+        if(flag){
+            // 获取到滑动盒子的dom元素并修改它移动的位置
+            $(".pre-box").css("transform","translateX(100%)")
+            // 获取到滑动盒子的dom元素并修改它的背景颜色
+            $(".pre-box").css("background-color","#c9e0ed")
+            //修改图片的路径
+            $("img").attr("src","../static/img/wuwu.jpeg")
+
+        }
+        else {
+            $(".pre-box").css("transform","translateX(0%)")
+            $(".pre-box").css("background-color","#edd4dc")
+            $("img").attr("src","../static/img/waoku.jpg")
+        }
+        flag=!flag
+    }
+    new Vue({
+        el:"#app",
+        data: {
+            registerFrom:{
+                email :'',
+                Username :'',
+                Password :'',
+                repeat :'',
+                code:''
+            },
+            loginFrom:{
+                Username :'',
+                Password :''
+            }
+        },
+        methods: {
+            sendCode(){
+                axios({
+                    //请求方式
+                    method:'get',
+                    //后端接口路径
+                    url:'/api/sendEmail',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        //attributeName为属性名，value为属性值
+                        email:this.registerFrom.email
+                    }
+                }).then((response) => {
+
+                }).catch((error) => {
+                    //对error进行处理
+                });
+            },
+            register(){
+                axios({
+                    //请求方式
+                    method:'post',
+                    //后端接口路径
+                    url:'/api/register',
+                    data: {
+                        jojo:{user:1,sad:1}
+                    },
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        //attributeName为属性名，value为属性值
+                        username:this.registerFrom.Username,
+                        password:this.registerFrom.Password,
+                        email:this.registerFrom.email,
+                        code:this.registerFrom.code
+                    }
+                }).then((response) => {
+
+                }).catch((error) => {
+                    //对error进行处理
+                });
+            }
+        }
+
+    });
+
+
+</script>
+</html>
