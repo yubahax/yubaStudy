@@ -20,8 +20,8 @@ public interface StudentMapper extends BaseMapper<Student> {
             @Result(column = "grade", property = "grade"),
             @Result(column = "id", property = "id"),
     })
-    @Select("select * from student where id = #{id}")
-    Student selectStudentById(int id);
+    @Select("select * from student where sid = #{sid}")
+    Student selectStudentBysId(int sid);
 
 
 

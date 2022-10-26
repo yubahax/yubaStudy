@@ -3,11 +3,8 @@ package com.example.demo.controller.api;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -34,7 +31,7 @@ public class UserController {
 
     @RequestMapping(value = "/saveStudentInfo",method = RequestMethod.POST)
     public void saveStudentInfo(@RequestParam("sid") int sid,
-                                @RequestParam("sname") String sname,
+                                @RequestParam("name") String sname,
                                 @RequestParam("sex") String sex,
                                 @RequestParam("age") int age,
                                 @RequestParam("grade") int grade,
