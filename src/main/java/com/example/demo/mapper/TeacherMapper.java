@@ -1,11 +1,10 @@
 package com.example.demo.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.example.demo.entity.LeaveApproval;
+import com.example.demo.entity.Student;
 import com.example.demo.vo.SubClass;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -23,7 +22,29 @@ public interface TeacherMapper {
             "group by major,grade")
     List<SubClass> getMajorList(int id);
 
+    @Select("select * from leaveapproval\n" +
+            "where sid \n" +
+            "in \n" +
+            "(select sid from student \n" +
+            "where (major,sid)\n" +
+            "in \n" +
+            "(select major,sid from st where id = #{id})\n" +
+            ")")
+    List<LeaveApproval> getStudentApproval(int id);
 
 
+    @Update("update leaveapproval set status = #{status} where lid = #{lid}")
+    void changeApprovalStatus(int lid,int status);
+
+
+    @Select("select * from student\n" +
+            "where sid in \n" +
+            "(select sid from student where (major,sid)\n" +
+            "in \n" +
+            "(select major,sid from st where id = #{id})\n" +
+            ")\n" +
+            "AND\n" +
+            "sid not in(select sid from dailycheck where checktime = #{time})")
+    List<Student> getNoCheckStudent(@Param("sid") int id ,@Param("id") String time);
 
 }

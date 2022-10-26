@@ -5,6 +5,7 @@ import com.example.demo.entity.Student;
 import com.example.demo.service.TeacherService;
 import com.example.demo.vo.SubClass;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,15 @@ public class TeacherController {
         return teacherService.getStudentList(major,grade);
     }
 
+    @GetMapping("/getStudent")
+    public Student getStudent(@Param("sid") int sid) {
+        return teacherService.getStudent(sid);
+    }
+
+    @GetMapping("/judge")
+    public void changeStudentRequest(@Param("lid")int lid,@Param("change")int status) {
+        teacherService.changeApprovalStatus(lid, status);
+    }
 
 
 
