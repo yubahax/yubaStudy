@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.DailyCheck;
 import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
+import com.example.demo.entity.Teacher;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.mapper.TeacherMapper;
 import com.example.demo.service.TeacherService;
@@ -61,5 +61,8 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.getNoCheckStudent(id,time);
     }
 
-
+    @Override
+    public void modifyTeacherInfo(Teacher teacher) {
+        teacherMapper.updateById(teacher);
+    }
 }

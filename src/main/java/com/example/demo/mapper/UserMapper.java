@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 import com.example.demo.entity.User;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
@@ -17,5 +15,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Insert("insert into user(name,password,role,email) values(#{name},#{password},#{role},#{email})")
     void saveUser(User user);
-
+    @Update("UPDATE user SET name = #{name}, password=#{password}, email= #{email} where id = #{id}")
+    void  modifyUser(User user);
 }

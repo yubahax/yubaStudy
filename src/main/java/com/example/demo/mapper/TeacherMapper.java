@@ -3,13 +3,14 @@ package com.example.demo.mapper;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
+import com.example.demo.entity.Teacher;
 import com.example.demo.vo.SubClass;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface TeacherMapper {
+public interface TeacherMapper extends BaseMapper<Teacher>{
 
     @Results({
             @Result(column = "major", property = "major"),

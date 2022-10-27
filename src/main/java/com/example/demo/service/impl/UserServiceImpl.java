@@ -85,5 +85,13 @@ public class UserServiceImpl implements UserService {
         studentMapper.insert(student);
     }
 
+    @Override
+    public void modifyUserInfo(User user){
+        userMapper.modifyUser(user);
+    }
 
+    @Override
+    public void modifyStudentInfo(Student student) {
+        studentMapper.updateById(student);
+    }
 }

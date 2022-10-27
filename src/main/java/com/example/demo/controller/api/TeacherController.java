@@ -2,13 +2,12 @@ package com.example.demo.controller.api;
 
 
 import com.example.demo.entity.Student;
+import com.example.demo.entity.Teacher;
+import com.example.demo.entity.User;
 import com.example.demo.service.TeacherService;
 import com.example.demo.vo.SubClass;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -41,7 +40,26 @@ public class TeacherController {
     public void changeStudentRequest(@Param("lid")int lid,@Param("change")int status) {
         teacherService.changeApprovalStatus(lid, status);
     }
-
+    @RequestMapping(value = "/modifyTeacherInfo",method = RequestMethod.POST)
+    public void modifyTeacherInfo(@RequestParam("tid")int tid,
+                                  @RequestParam("tname") String tname,
+                                  @RequestParam("sex") String sex,
+                                  @RequestParam("age") int age,
+                                  @RequestParam("education") String education,
+                                  @RequestParam("idcard") String idcard,
+                                  @RequestParam("appointment") String appointment,HttpSession session){
+        Teacher teacher = new Teacher();
+        User user = (User) session.getAttribute("teacher");
+        teacher.setTid(tid);
+        teacher.setTname(tname);
+        teacher.setSex(sex);
+        teacher.setAge(age);
+        teacher.setEducation(education);
+        teacher.setIdcard(idcard);
+        teacher.setAppointment(appointment);
+        teacher.setId(user.getId());
+        teacherService.modifyTeacherInfo(teacher);
+    }
 
 
 
