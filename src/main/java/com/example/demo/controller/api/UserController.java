@@ -49,4 +49,39 @@ public class UserController {
         student.setGrade(grade);
         service.saveStudentInfo(student);
     }
+
+    @RequestMapping(value = "/modifyUserInfo",method = RequestMethod.POST)
+    public void  modifyUserInfo(@RequestParam("name") String name,
+                                @RequestParam("password")String password,
+                                @RequestParam("email")String email,HttpSession session ){
+        User user = new User();
+        User userid = (User) session.getAttribute("user");
+        user.setName(name);
+        user.setPassword(new BCryptPasswordEncoder().encode(password));//密码加密
+        user.setEmail(email);
+        user.setId(userid.getId());
+        service.modifyUserInfo(user);
+    }
+
+    @RequestMapping(value = "/modifyStudentInfo",method = RequestMethod.POST)
+    public void modifyStudentInfo(@RequestParam("sid") int sid,
+                                  @RequestParam("name") String sname,
+                                  @RequestParam("sex") String sex,
+                                  @RequestParam("age") int age,
+                                  @RequestParam("grade") int grade,
+                                  @RequestParam("major") String major,
+                                  @RequestParam("room") String room,HttpSession session){
+        Student student = new Student();
+        User user = (User) session.getAttribute("student");
+        student.setAge(age);
+        student.setSex(sex);
+        student.setRoom(room);
+        student.setMajor(major);
+        student.setId(user.getId());
+        student.setSname(sname);
+        student.setSid(sid);
+        student.setGrade(grade);
+        service.modifyStudentInfo(student);
+    }
+
 }

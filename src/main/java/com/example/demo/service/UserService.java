@@ -19,4 +19,7 @@ public interface UserService {
 
     public void saveStudentInfo(Student student);
 
+    public void modifyUserInfo(User user);
+
+    public void modifyStudentInfo(Student student);
 }
