@@ -63,6 +63,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void modifyTeacherInfo(Teacher teacher) {
-        teacherMapper.updateById(teacher);
+        teacherMapper.updateTeacherInfo(teacher);
     }
 }

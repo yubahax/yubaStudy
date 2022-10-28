@@ -55,11 +55,11 @@ public class UserController {
                                 @RequestParam("password")String password,
                                 @RequestParam("email")String email,HttpSession session ){
         User user = new User();
-        User userid = (User) session.getAttribute("user");
+        int id = (int) session.getAttribute("id");
         user.setName(name);
         user.setPassword(new BCryptPasswordEncoder().encode(password));//密码加密
         user.setEmail(email);
-        user.setId(userid.getId());
+        user.setId(id);
         service.modifyUserInfo(user);
     }
 
@@ -72,12 +72,12 @@ public class UserController {
                                   @RequestParam("major") String major,
                                   @RequestParam("room") String room,HttpSession session){
         Student student = new Student();
-        User user = (User) session.getAttribute("student");
+        int id = (int) session.getAttribute("id");
         student.setAge(age);
         student.setSex(sex);
         student.setRoom(room);
         student.setMajor(major);
-        student.setId(user.getId());
+        student.setId(id);
         student.setSname(sname);
         student.setSid(sid);
         student.setGrade(grade);

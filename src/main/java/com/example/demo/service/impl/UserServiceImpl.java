@@ -92,6 +92,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modifyStudentInfo(Student student) {
-        studentMapper.updateById(student);
+        studentMapper.updateStudentById(student);
     }
 }

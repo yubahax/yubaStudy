@@ -25,7 +25,4 @@ public class Student {
 
     private String major;
 
-
-
-
 }

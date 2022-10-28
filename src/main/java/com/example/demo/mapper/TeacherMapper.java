@@ -33,10 +33,8 @@ public interface TeacherMapper extends BaseMapper<Teacher>{
             ")")
     List<LeaveApproval> getStudentApproval(int id);
 
-
     @Update("update leaveapproval set status = #{status} where lid = #{lid}")
     void changeApprovalStatus(int lid,int status);
-
 
     @Select("select * from student\n" +
             "where sid in \n" +
@@ -48,4 +46,7 @@ public interface TeacherMapper extends BaseMapper<Teacher>{
             "sid not in(select sid from dailycheck where checktime = #{time})")
     List<Student> getNoCheckStudent(@Param("sid") int id ,@Param("id") String time);
 
+
+    @Update("update teacher set tname = #{tname},sex = #{sex},age = #{age},education = #{education},idcard = #{idcard},appointment = #{appointment} where id = #{id}")
+    void updateTeacherInfo(Teacher teacher);
 }
