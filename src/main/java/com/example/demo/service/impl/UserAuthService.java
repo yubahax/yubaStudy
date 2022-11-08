@@ -19,11 +19,13 @@ public class UserAuthService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User data = mapper.selectByName(username);
-        if(data == null) throw new UsernameNotFoundException("用户 "+username+" 登录失败，用户名不存在！");
+        if(data == null) {
+            throw new UsernameNotFoundException("用户 "+username+" 登录失败，用户名不存在！");
+        }
         return org.springframework.security.core.userdetails.User
                 .withUsername(data.getName())
                 .password(data.getPassword())
-                .roles("user")
+                .roles(data.getRole())
                 .build();
     }
 }

@@ -13,7 +13,7 @@ public interface UserService {
 
     public  boolean verifiyCodeIsTrue(String email,String code);
 
-    public boolean ifStudentInfoIsEXist(HttpSession session,String name);
+    public boolean ifStudentInfoIsExist(HttpSession session,String name);
 
     public User selectUserByName(String name);
 

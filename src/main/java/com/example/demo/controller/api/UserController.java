@@ -57,7 +57,8 @@ public class UserController {
         User user = new User();
         int id = (int) session.getAttribute("id");
         user.setName(name);
-        user.setPassword(new BCryptPasswordEncoder().encode(password));//密码加密
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        //密码加密
         user.setEmail(email);
         user.setId(id);
         service.modifyUserInfo(user);

@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean ifStudentInfoIsEXist(HttpSession session, String name) {
+    public boolean ifStudentInfoIsExist(HttpSession session, String name) {
         User user = (User) session.getAttribute("user");
         Student student =  studentMapper.selectById(user.getId());
         if (student == null) {

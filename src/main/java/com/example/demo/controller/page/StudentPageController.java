@@ -33,8 +33,8 @@ public class StudentPageController {
         User user = userService.selectUserByName(name);
         session.setAttribute("user",user);
         session.setAttribute("id",user.getId());
-        if (user.getRole().equals("admin")) {return "admin";}
-        if (userService.ifStudentInfoIsEXist(session,name)) {
+        if ("admin".equals(user.getRole())) {return "admin";}
+        if (userService.ifStudentInfoIsExist(session,name)) {
             return "index";
         } else {
             return "redirect:/saveInfo";

@@ -2,6 +2,10 @@ package com.example.demo.entity;
 
 import lombok.Data;
 
+/**
+ * @author lianx
+ *
+ */
 @Data
 public class DailyCheck {
     private int did;
