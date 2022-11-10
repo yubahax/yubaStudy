@@ -80,18 +80,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public void saveStudentInfo(Student student) {
-        studentMapper.insert(student);
-    }
+
 
     @Override
     public void modifyUserInfo(User user){
         userMapper.modifyUser(user);
     }
 
-    @Override
-    public void modifyStudentInfo(Student student) {
-        studentMapper.updateStudentById(student);
-    }
+
 }

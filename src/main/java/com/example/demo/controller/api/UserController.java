@@ -2,6 +2,7 @@ package com.example.demo.controller.api;
 
 import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
+import com.example.demo.service.StudentService;
 import com.example.demo.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Resource
     UserService service;
+
+    @Resource
+    StudentService studentService;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("code") String code) {
@@ -47,7 +51,7 @@ public class UserController {
         student.setSname(sname);
         student.setSid(sid);
         student.setGrade(grade);
-        service.saveStudentInfo(student);
+        studentService.saveStudentInfo(student);
     }
 
     @RequestMapping(value = "/modifyUserInfo",method = RequestMethod.POST)
@@ -82,7 +86,7 @@ public class UserController {
         student.setSname(sname);
         student.setSid(sid);
         student.setGrade(grade);
-        service.modifyStudentInfo(student);
+        studentService.modifyStudentInfo(student);
     }
 
 }

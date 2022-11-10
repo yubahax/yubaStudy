@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @TableName("student")
 public class Student {
 
-    @TableId(type = IdType.AUTO)
     private int sid;
 
     @TableField("id")
