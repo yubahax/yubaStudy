@@ -34,4 +34,6 @@ public interface BookMapper extends BaseMapper<Book> {
             "(select bid from relationship where sid = #{sid})")
     List<Book> getStudentBorrowedBooks(int sid);
 
+    @Delete("delete from relationship where bid = #{bid} and sid = #{sid}")
+    void returnBook(int bid,int sid);
 }

@@ -3,12 +3,13 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.Commodity;
 import com.example.demo.mapper.CommodityMapper;
 import com.example.demo.service.CommodityService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Service
 public class CommodityServiceImpl implements CommodityService {
 
     @Resource

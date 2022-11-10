@@ -3,12 +3,13 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.Book;
 import com.example.demo.mapper.BookMapper;
 import com.example.demo.service.BookService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Service
 public class BookServiceImpl implements BookService {
 
     @Resource
@@ -33,10 +34,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void returnBook(int bid,int sid){
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("bid",bid);
-        map.put("sid",sid);
-        bookMapper.deleteByMap(map);
+        bookMapper.returnBook(bid, sid);
     };
 
     @Override

@@ -8,12 +8,13 @@ import com.example.demo.mapper.DailyCheckMapper;
 import com.example.demo.mapper.LeaveApprovalMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.service.StudentService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+@Service
 public class StudentServiceImpl implements StudentService {
     @Resource
     StudentMapper studentMapper;
