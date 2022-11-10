@@ -6,6 +6,7 @@ import com.example.demo.entity.User;
 import javax.servlet.http.HttpSession;
 
 public interface UserService {
+
     /**
      * 用户注册，只有学生需要注册，辅导员内部账号
      * @param user 注册信息封装为实体类
@@ -28,21 +29,11 @@ public interface UserService {
     public  boolean verifiyCodeIsTrue(String email,String code);
 
     /**
-     * 判断当前用户的学生信息是否存在
-     * @param session 会话session，由controller传入
-     * @param name 用户名
-     * @return 用户存在则true，不存在则为false
-     */
-    public boolean ifStudentInfoIsExist(HttpSession session,String name);
-
-    /**
      * 根据用户名查找用户信息
      * @param name 用户名
      * @return 用户实体类
      */
     public User selectUserByName(String name);
-
-
 
     /**
      * 修改用户信息

@@ -2,6 +2,7 @@ package com.example.demo.controller.page;
 
 
 import com.example.demo.entity.User;
+import com.example.demo.service.StudentService;
 import com.example.demo.service.UserService;
 import lombok.Data;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,15 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-@Data
+
 @Controller
 public class StudentPageController {
     @Resource
     StringRedisTemplate stringRedisTemplate;
-
     @Resource
     UserService userService;
-
+    @Resource
+    StudentService studentService;
     @RequestMapping("/index")
     public String index(HttpSession session) {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -34,7 +35,7 @@ public class StudentPageController {
         session.setAttribute("user",user);
         session.setAttribute("id",user.getId());
         if ("admin".equals(user.getRole())) {return "admin";}
-        if (userService.ifStudentInfoIsExist(session,name)) {
+        if (studentService.ifStudentInfoIsExist(session,name)) {
             return "index";
         } else {
             return "redirect:/saveInfo";
@@ -46,10 +47,8 @@ public class StudentPageController {
         return "saveStudentInfo";
     }
 
-
     @RequestMapping({"/login","/"})
     public String login() {
-
         return "login";
     }
 
