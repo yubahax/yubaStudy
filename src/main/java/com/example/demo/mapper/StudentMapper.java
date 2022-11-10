@@ -28,6 +28,13 @@ public interface StudentMapper extends BaseMapper<Student> {
     @Update("update student set sname = #{sname},age = #{age},sex = #{sex},room = #{room},major = #{major},grade = #{grade} where id = #{id}")
     void updateStudentById(Student student);
 
+    /**
+     * 根据学生的用户id，查找对应学生基本信息
+     * @param id 用户id
+     * @return 对应学生实体类
+     */
+    @Select("select * from student where id = #{id}")
+    Student getStudentByUserId(int id);
 
 
 }
