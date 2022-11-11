@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Book;
 import com.example.demo.mapper.BookMapper;
 import com.example.demo.service.BookService;
@@ -15,11 +16,19 @@ public class BookServiceImpl implements BookService {
     @Resource
     BookMapper bookMapper;
 
+    @Resource
+    RedisUtils redisUtils;
+
     @Override
     public List<Book> getAllIsAliveBook() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("isalive",1);
-        return bookMapper.selectByMap(map);
+        List<Book> books = (List<Book>) redisUtils.get("allisalivebook");
+        if (books == null) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("isalive", 1);
+            books = bookMapper.selectByMap(map);
+            redisUtils.set("allisalivebook", books);
+        }
+        return books;
     }
 
     @Override
@@ -39,7 +48,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getStudentBorrowedBooks(int sid) {
-        return bookMapper.getStudentBorrowedBooks(sid);
+        List<Book> books = (List<Book>) redisUtils.get("student"+sid+"book");
+        if(books == null) {
+            books = bookMapper.getStudentBorrowedBooks(sid);
+            redisUtils.set("student" + sid + "book", books);
+        }
+        return books;
     };
 
 }

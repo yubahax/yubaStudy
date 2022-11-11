@@ -1,6 +1,7 @@
 package com.example.demo.controller.page;
 
 
+import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.User;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.UserService;
@@ -26,16 +27,21 @@ public class StudentPageController {
     UserService userService;
     @Resource
     StudentService studentService;
+
+    @Resource
+    RedisUtils redisUtils;
     @RequestMapping("/index")
-    public String index(HttpSession session) {
+    public String index() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String name = authentication.getName();
-        User user = userService.selectUserByName(name);
-        session.setAttribute("user",user);
-        session.setAttribute("id",user.getId());
+        User user = (User) redisUtils.get(name);
+        if(user == null) {
+            user = userService.selectUserByName(name);
+            redisUtils.set(name,user);
+        }
         if ("admin".equals(user.getRole())) {return "admin";}
-        if (studentService.ifStudentInfoIsExist(session,name)) {
+        if (studentService.ifStudentInfoIsExist(user.getId())) {
             return "index";
         } else {
             return "redirect:/saveInfo";

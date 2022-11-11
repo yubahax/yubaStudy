@@ -58,7 +58,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean verifiyCodeIsTrue(String email, String code) {
         String string = stringRedisTemplate.opsForValue().get("verify:code:" + email);
-        if (string == null) return false;
+        if (string == null) {
+            return false;
+        }
         return code.equals(string);
     }
 

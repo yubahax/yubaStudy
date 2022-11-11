@@ -9,11 +9,11 @@ import javax.servlet.http.HttpSession;
 public interface StudentService {
     /**
      * 判断当前用户的学生信息是否存在
-     * @param session 会话session，由controller传入
-     * @param name 用户名
+     * @param id 用户id
+     *
      * @return 用户存在则true，不存在则为false
      */
-    public boolean ifStudentInfoIsExist(HttpSession session, String name);
+    public boolean ifStudentInfoIsExist(int id);
 
     /**
      * 保存的学生信息，其底层为insert

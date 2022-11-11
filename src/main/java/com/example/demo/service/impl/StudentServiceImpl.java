@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.DailyCheck;
 import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
@@ -25,6 +26,9 @@ public class StudentServiceImpl implements StudentService {
     @Resource
     DailyCheckMapper dailyCheckMapper;
 
+    @Resource
+    RedisUtils redisUtils;
+
     @Override
     public void saveStudentInfo(Student student) {
         studentMapper.insert(student);
@@ -35,13 +39,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean ifStudentInfoIsExist(HttpSession session, String name) {
-        User user = (User) session.getAttribute("user");
-        Student student =  studentMapper.selectById(user.getId());
+    public boolean ifStudentInfoIsExist(int id) {
+        Student student =  studentMapper.selectById(id);
         if (student == null) {
             return false;
         } else {
-            session.setAttribute("student",student);
+            redisUtils.set("user"+id+"student",student);
             return true;
         }
     }
