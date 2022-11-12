@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("relationship")
-public class Relationship {
+public class Relationship implements Serializable {
     @TableId(type = IdType.AUTO)
     private int rid;
 

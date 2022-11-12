@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.StudentMapper;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
+    @Resource
+    RedisUtils redisUtils;
 
 
 
@@ -76,6 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modifyUserInfo(User user){
+        redisUtils.set(user.getName(), user);
         userMapper.modifyUser(user);
     }
 

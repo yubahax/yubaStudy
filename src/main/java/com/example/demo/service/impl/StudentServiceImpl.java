@@ -9,6 +9,9 @@ import com.example.demo.mapper.DailyCheckMapper;
 import com.example.demo.mapper.LeaveApprovalMapper;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.service.StudentService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,10 +34,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveStudentInfo(Student student) {
+        User user = redisUtils.getUser();
+        redisUtils.set("user"+user.getId()+"student",student);
         studentMapper.insert(student);
     }
     @Override
     public void modifyStudentInfo(Student student) {
+        User user = redisUtils.getUser();
+        redisUtils.set("user"+user.getId()+"student",student);
         studentMapper.updateStudentById(student);
     }
 

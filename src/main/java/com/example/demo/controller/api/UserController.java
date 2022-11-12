@@ -1,5 +1,6 @@
 package com.example.demo.controller.api;
 
+import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
 import com.example.demo.service.StudentService;
@@ -18,6 +19,9 @@ public class UserController {
 
     @Resource
     StudentService studentService;
+
+    @Resource
+    RedisUtils redisUtils;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("code") String code) {
@@ -42,7 +46,7 @@ public class UserController {
                                 @RequestParam("major") String major,
                                 @RequestParam("room") String room,HttpSession session) {
         Student student = new Student();
-        User user = (User) session.getAttribute("user");
+        User user = redisUtils.getUser();
         student.setAge(age);
         student.setSex(sex);
         student.setRoom(room);
@@ -57,9 +61,9 @@ public class UserController {
     @RequestMapping(value = "/modifyUserInfo",method = RequestMethod.POST)
     public void  modifyUserInfo(@RequestParam("name") String name,
                                 @RequestParam("password")String password,
-                                @RequestParam("email")String email,HttpSession session ){
+                                @RequestParam("email")String email){
         User user = new User();
-        int id = (int) session.getAttribute("id");
+        int id = redisUtils.getUser().getId();
         user.setName(name);
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         //密码加密
@@ -77,12 +81,12 @@ public class UserController {
                                   @RequestParam("major") String major,
                                   @RequestParam("room") String room,HttpSession session){
         Student student = new Student();
-        int id = (int) session.getAttribute("id");
+        User user = redisUtils.getUser();
         student.setAge(age);
         student.setSex(sex);
         student.setRoom(room);
         student.setMajor(major);
-        student.setId(id);
+        student.setId(user.getId());
         student.setSname(sname);
         student.setSid(sid);
         student.setGrade(grade);

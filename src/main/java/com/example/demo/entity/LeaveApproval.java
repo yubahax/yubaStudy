@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @TableName("leaveapproval")
-public class LeaveApproval {
+public class LeaveApproval implements Serializable {
     @TableId(type = IdType.AUTO)
     private int lid;
 

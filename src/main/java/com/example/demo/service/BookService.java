@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface BookService {
     /**
-     * 返回数据库中所有isalive为1的图书（即未借出的书）
+     * 返回数据库中所有1的图书
      * @return 图书实体类
      */
-    public List<Book> getAllIsAliveBook();
+    public List<Book> getAllBook();
 
     /**
      * 借书，向relationship表中添加（insert）一对借阅关系

@@ -1,6 +1,7 @@
 package com.example.demo.controller.api;
 
 
+import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.Teacher;
@@ -21,9 +22,12 @@ public class TeacherController {
     @Resource
     TeacherService teacherService;
 
+    @Resource
+    RedisUtils redisUtils;
+
     @GetMapping("/getMajorList")
-    public List<SubClass> getMajorList(HttpSession session){
-        int id = (int) session.getAttribute("id");
+    public List<SubClass> getMajorList(){
+        int id = redisUtils.getUser().getId();
         return teacherService.getMajorList(id);
     }
 
@@ -50,7 +54,7 @@ public class TeacherController {
                                   @RequestParam("idcard") String idcard,
                                   @RequestParam("appointment") String appointment,HttpSession session){
         Teacher teacher = new Teacher();
-        int id = (int) session.getAttribute("id");
+        int id = redisUtils.getUser().getId();
         teacher.setTid(tid);
         teacher.setTname(tname);
         teacher.setSex(sex);
@@ -63,14 +67,14 @@ public class TeacherController {
     }
 
     @GetMapping("/getLeaveApprovalList")
-    public List<LeaveApproval> getLeaveApprovalList(HttpSession session) {
-        int id = (int) session.getAttribute("id");
+    public List<LeaveApproval> getLeaveApprovalList() {
+        int id = redisUtils.getUser().getId();
         return teacherService.getLeaveApprovalList(id);
     }
 
     @GetMapping("/getNoCheckStudent")
-    public List<Student> getNoCheckStudent(HttpSession session) {
-        int id = (int) session.getAttribute("id");
+    public List<Student> getNoCheckStudent() {
+        int id = redisUtils.getUser().getId();
         return teacherService.getNoCheckStudent(id);
     }
 

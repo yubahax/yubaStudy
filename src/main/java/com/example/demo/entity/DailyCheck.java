@@ -6,13 +6,15 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author lianx
  *
  */
 @Data
 @TableName("dailycheck")
-public class DailyCheck {
+public class DailyCheck implements Serializable {
     @TableId(type = IdType.AUTO)
     private int did;
 

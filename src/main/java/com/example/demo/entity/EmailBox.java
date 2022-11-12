@@ -7,11 +7,14 @@ import com.baomidou.mybatisplus.enums.IdType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("emailbox")
-public class EmailBox {
+public class EmailBox implements Serializable {
     @TableId(type = IdType.AUTO)
     private int eid;
 

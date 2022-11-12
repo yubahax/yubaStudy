@@ -2,14 +2,16 @@ package com.example.demo.service.impl;
 
 import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Book;
+import com.example.demo.entity.User;
 import com.example.demo.mapper.BookMapper;
 import com.example.demo.service.BookService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -19,13 +21,21 @@ public class BookServiceImpl implements BookService {
     @Resource
     RedisUtils redisUtils;
 
+    public Comparator<Book> comper(){
+        return new Comparator<Book>() {
+            @Override
+            public int compare(Book o1, Book o2) {
+                return o1.getBid()-o2.getBid();
+                //结构体排序，按照bid升序
+            }
+        };
+    }
+
     @Override
-    public List<Book> getAllIsAliveBook() {
+    public List<Book> getAllBook() {
         List<Book> books = (List<Book>) redisUtils.get("allisalivebook");
         if (books == null) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("isalive", 1);
-            books = bookMapper.selectByMap(map);
+            books = bookMapper.selectList(null);
             redisUtils.set("allisalivebook", books);
         }
         return books;
@@ -33,16 +43,38 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void borrowBook(int bid,int sid){
+        List<Book> books = (List<Book>) redisUtils.get("student" + sid + "book");
+        if(books != null) {
+            Iterator<Book> iterator = books.iterator();
+            Book book = bookMapper.selectById(bid);
+            books.add(book);
+            books.sort(comper());
+            redisUtils.set("student" + sid + "book",books);
+        }
         bookMapper.borrowBook(bid,sid);
     };
 
     @Override
     public void changeBookIsAlive(int bid,int alive){
+        List<Book> books = (List<Book>) redisUtils.get("allisalivebook");
         bookMapper.changeBookIsAlive(bid,alive);
     }
 
     @Override
     public void returnBook(int bid,int sid){
+        List<Book> books = (List<Book>) redisUtils.get("student" + sid + "book");
+        if(books != null) {
+            Iterator<Book> iterator = books.iterator();
+            while(iterator.hasNext()) {
+                Book book = iterator.next();
+                if(book.getBid() == bid) {
+                    iterator.remove();
+                    break;
+                }
+            }
+            books.sort(comper());
+            redisUtils.set("student" + sid + "book",books);
+        }
         bookMapper.returnBook(bid, sid);
     };
 
