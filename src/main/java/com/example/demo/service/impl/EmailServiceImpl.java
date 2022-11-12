@@ -1,7 +1,10 @@
 package com.example.demo.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.EmailBox;
+import com.example.demo.entity.User;
 import com.example.demo.mapper.EmailBoxMapper;
 import com.example.demo.service.EmailService;
 import org.springframework.stereotype.Service;
@@ -20,29 +23,32 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public List<EmailBox> getStudentEmail() {
-        List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("emailBoxes");
+        int sid = redisUtils.getStudent().getSid();
+        List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("student"+sid+"emailBoxes");
         //获取emailBoxes的缓存
         if(emailBoxes == null) {
-            emailBoxes = emailBoxMapper.selectList(null);
-            redisUtils.set("emailBoxes", emailBoxes);
+            emailBoxes = emailBoxMapper.selectList(new EntityWrapper<EmailBox>().eq("sid",sid));
+            redisUtils.set("student"+sid+"emailBoxes", emailBoxes);
         }
         return emailBoxes;
     }
 
     @Override
     public void addStudentEmail(EmailBox email) {
-        List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("emailBoxes");
+        int sid = redisUtils.getStudent().getSid();
+        List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("student"+sid+"emailBoxes");
         //获取emailBoxes的缓存
         if(emailBoxes != null){
             emailBoxes.add(0,email);
-            redisUtils.set("emailBoxes",emailBoxes);
+            redisUtils.set("student"+sid+"emailBoxes",emailBoxes);
         }
         emailBoxMapper.insert(email);
     }
 
     @Override
     public void deleteStudentEmail(int eid) {
-        List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("emailBoxes");
+        int sid = redisUtils.getStudent().getSid();
+        List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("student"+sid+"emailBoxes");
         //获取emailBoxes的缓存
         if(emailBoxes != null){
             Iterator<EmailBox> iterator = emailBoxes.iterator();
@@ -54,7 +60,7 @@ public class EmailServiceImpl implements EmailService {
                     break;
                 }
             }
-            redisUtils.set("emailBoxes",emailBoxes);
+            redisUtils.set("student"+sid+"emailBoxes",emailBoxes);
         }
         emailBoxMapper.deleteById(eid);
     }

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -32,31 +34,23 @@ public class UserController {
        }
     }
 
+    @GetMapping("/test")
+    public List<User> test() {
+        List<User> list = new ArrayList<>();
+        User x = new User(1,"yuba","5858","user","571239193@qq.com");
+        User y = new User(2,"yuba","5858","user","571239193@qq.com");
+        User z = new User(3,"yuba","5858","user","571239193@qq.com");
+        list.add(x);
+        list.add(y);
+        list.add(z);
+        return list;
+    }
     @RequestMapping("/sendEmail")
     public void sendEmail(@RequestParam("email") String email) {
         service.sendVerifyCode(email);
     }
 
-    @RequestMapping(value = "/saveStudentInfo",method = RequestMethod.POST)
-    public void saveStudentInfo(@RequestParam("sid") int sid,
-                                @RequestParam("name") String sname,
-                                @RequestParam("sex") String sex,
-                                @RequestParam("age") int age,
-                                @RequestParam("grade") int grade,
-                                @RequestParam("major") String major,
-                                @RequestParam("room") String room,HttpSession session) {
-        Student student = new Student();
-        User user = redisUtils.getUser();
-        student.setAge(age);
-        student.setSex(sex);
-        student.setRoom(room);
-        student.setMajor(major);
-        student.setId(user.getId());
-        student.setSname(sname);
-        student.setSid(sid);
-        student.setGrade(grade);
-        studentService.saveStudentInfo(student);
-    }
+
 
     @RequestMapping(value = "/modifyUserInfo",method = RequestMethod.POST)
     public void  modifyUserInfo(@RequestParam("name") String name,

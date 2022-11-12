@@ -2,12 +2,11 @@ package com.example.demo.controller.page;
 
 
 import com.example.demo.Util.RedisUtils;
+import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.UserService;
-import lombok.Data;
 import org.springframework.data.redis.core.StringRedisTemplate;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,6 +47,31 @@ public class StudentPageController {
         }
     }
 
+    @RequestMapping("/test")
+    public String test(){
+        return "test";
+    }
+    @RequestMapping(value = "/api/saveStudentInfo",method = RequestMethod.POST)
+    public String saveStudentInfo(@RequestParam("sid") int sid,
+                                @RequestParam("name") String sname,
+                                @RequestParam("sex") String sex,
+                                @RequestParam("age") int age,
+                                @RequestParam("grade") int grade,
+                                @RequestParam("major") String major,
+                                @RequestParam("room") String room,HttpSession session) {
+        Student student = new Student();
+        User user = redisUtils.getUser();
+        student.setAge(age);
+        student.setSex(sex);
+        student.setRoom(room);
+        student.setMajor(major);
+        student.setId(user.getId());
+        student.setSname(sname);
+        student.setSid(sid);
+        student.setGrade(grade);
+        studentService.saveStudentInfo(student);
+        return "redirect:/index";
+    }
     @RequestMapping("/saveInfo")
     public String hi() {
         return "saveStudentInfo";

@@ -6,7 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.TimeUnit;
 
+import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.StudentMapper;
+import com.example.demo.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,11 +18,19 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Component
 public class RedisUtils {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Resource
+    StudentMapper studentMapper;
+
+    @Resource
+    UserMapper userMapper;
 
     /**
      * 根据key读取数据
@@ -51,6 +62,21 @@ public class RedisUtils {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String name = authentication.getName();
-        return (User) this.get(name);
+        User user = (User) this.get(name);
+        if(user == null) {
+            user = userMapper.selectByName(name);
+            this.set(name,user);
+        }
+        return user;
+    }
+
+    public Student getStudent() {
+        User user = this.getUser();
+        Student student = (Student) this.get("user"+user.getId()+"student");
+        if (student == null) {
+            student = studentMapper.getStudentByUserId(user.getId());
+            this.set("user"+user.getId()+"student",student);
+        }
+        return student;
     }
 }

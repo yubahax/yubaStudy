@@ -94,8 +94,9 @@ public class CommodityServiceImpl implements CommodityService {
                     break;
                 }
             }
-            redisUtils.set(ctype+"commodity",commodities);
+            redisUtils.set("student"+sid+ctype+"commodity",commodities);
         }
         commodityMapper.deleteById(cid);
     }
+
 }
