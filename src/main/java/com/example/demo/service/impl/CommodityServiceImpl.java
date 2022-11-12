@@ -46,6 +46,22 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public void addCommodity(Commodity commodity) {
+        List<Commodity> commodities = (List<Commodity>) redisUtils.get(commodity.getCtype()+"commodity");
+        //获取主页面commodities缓存
+        if (commodities != null) {
+            commodities.add(0,commodity);
+            //插入至第一位
+            redisUtils.set(commodity.getCtype() + "commodity", commodities);
+            //更新主页面中commodities缓存
+        }
+        commodities = (List<Commodity>) redisUtils.get("student"+commodity.getSid()+commodity.getCtype()+"commodity");
+        //获取学生commodities缓存
+        if (commodities != null) {
+            commodities.add(0,commodity);
+            //插入至第一位
+            redisUtils.set("student"+commodity.getSid()+commodity.getCtype()+"commodity", commodities);
+            //更新学生管理页面中的commodities缓存
+        }
         commodityMapper.insert(commodity);
     }
 }

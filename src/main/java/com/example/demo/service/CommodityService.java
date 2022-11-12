@@ -27,4 +27,10 @@ public interface CommodityService {
      * @param commodity 信息实体类
      */
     public void addCommodity(Commodity commodity);
+
+    /**
+     * 按照主键删除信息，注意增删改操作要考虑更新redis中的缓存
+     * @param cid 主键
+     */
+    public void deleteCommodity(int cid);
 }

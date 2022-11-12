@@ -45,18 +45,24 @@ public class BookServiceImpl implements BookService {
     public void borrowBook(int bid,int sid){
         List<Book> books = (List<Book>) redisUtils.get("student" + sid + "book");
         if(books != null) {
-            Iterator<Book> iterator = books.iterator();
             Book book = bookMapper.selectById(bid);
             books.add(book);
             books.sort(comper());
             redisUtils.set("student" + sid + "book",books);
         }
         bookMapper.borrowBook(bid,sid);
-    };
+    }
 
     @Override
     public void changeBookIsAlive(int bid,int alive){
         List<Book> books = (List<Book>) redisUtils.get("allisalivebook");
+        for(Book book:books) {
+            if(book.getBid() == bid) {
+                book.setIsalive(alive);
+                break;
+            }
+        }
+        redisUtils.set("allisalivebook",books);
         bookMapper.changeBookIsAlive(bid,alive);
     }
 
@@ -69,10 +75,12 @@ public class BookServiceImpl implements BookService {
                 Book book = iterator.next();
                 if(book.getBid() == bid) {
                     iterator.remove();
+                    //从缓存中删除书本信息
                     break;
                 }
             }
             books.sort(comper());
+            //按书编号排序
             redisUtils.set("student" + sid + "book",books);
         }
         bookMapper.returnBook(bid, sid);
