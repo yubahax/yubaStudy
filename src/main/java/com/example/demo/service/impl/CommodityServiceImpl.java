@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -63,5 +64,38 @@ public class CommodityServiceImpl implements CommodityService {
             //更新学生管理页面中的commodities缓存
         }
         commodityMapper.insert(commodity);
+    }
+
+    @Override
+    public void deleteCommodity(int cid,String ctype,int sid) {
+        List<Commodity> commodities = (List<Commodity>) redisUtils.get(ctype+"commodity");
+        //获取主页面commodities缓存
+        if(commodities != null){
+            Iterator<Commodity> iterator = commodities.iterator();
+            while(iterator.hasNext()) {
+                Commodity commodity = iterator.next();
+                if(commodity.getCid() == cid) {
+                    iterator.remove();
+                    //从缓存中删除信息
+                    break;
+                }
+            }
+            redisUtils.set(ctype+"commodity",commodities);
+        }
+        commodities = (List<Commodity>) redisUtils.get("student"+sid+ctype+"commodity");
+        //获取学生commodities缓存
+        if(commodities != null){
+            Iterator<Commodity> iterator = commodities.iterator();
+            while(iterator.hasNext()) {
+                Commodity commodity = iterator.next();
+                if(commodity.getCid() == cid) {
+                    iterator.remove();
+                    //从缓存中删除信息
+                    break;
+                }
+            }
+            redisUtils.set(ctype+"commodity",commodities);
+        }
+        commodityMapper.deleteById(cid);
     }
 }
