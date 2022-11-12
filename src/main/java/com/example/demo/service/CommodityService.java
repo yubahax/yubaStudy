@@ -32,5 +32,5 @@ public interface CommodityService {
      * 按照主键删除信息，注意增删改操作要考虑更新redis中的缓存
      * @param cid 主键
      */
-    public void deleteCommodity(int cid);
+    public void deleteCommodity(int cid,String ctype,int sid);
 }
