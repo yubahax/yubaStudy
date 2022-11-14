@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="../static/css/demo.css">
+
+</head>
+<body>
+    <div id="app" style="height: 100%">
+      <!-- 外部容器 -->
+      <el-container>
+        <!-- 侧栏容器 -->
+        <el-aside width="200px" class="daohang">
+          <!-- 导航栏 -->
+          <el-menu
+          default-active="4-1"
+          class="el-menu-vertical-demo"
+         >
+            <a href="/user/personInfo">
+          <el-menu-item index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>个人信息</span>
+            </template>
+          </el-menu-item>
+            </a>
+            <a href="/user/changeInfo">
+            <el-menu-item index="2">
+              <template slot="title">
+                <i class="el-icon-user"></i>
+                <span>修改账号</span>
+              </template>
+            </el-menu-item>
+            </a>
+            <a href="/user/mybook">
+          <el-menu-item index="3">
+            <template slot="title">
+              <i class="el-icon-reading"></i>
+              <span>我的图书</span>
+            </template>
+          </el-menu-item>
+            </a>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-school"></i>
+              <span>我的帖子</span>
+            </template>
+            <el-menu-item-group>
+              <a href="/user/myCommodity?type=run"><el-menu-item index="4-1">我的跑腿</el-menu-item></a>
+              <a href="/user/myCommodity?type=sold"><el-menu-item index="4-2">我的闲置</el-menu-item></a>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+        </el-aside>
+        <el-container>
+          <!-- 顶栏容器 -->
+          <el-header>
+            <el-row>
+              <el-col :span="20"><div class="grid-content bg-purple">
+                <h1 align="center">渝教育 个人中心</h1>
+              </div></el-col>
+              <el-col :span="4"><div class="grid-content bg-purple-light">
+                <!-- 头像 -->
+                <template>
+                  <div class="demo-type">
+                    <div>
+                      <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                      <el-dropdown trigger="click">
+                        <span class="el-dropdown-link">
+                          用户名<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item icon="el-icon-refresh-left">返回主页</el-dropdown-item>
+                          <el-dropdown-item icon="el-icon-close">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </div>
+                  </div>
+                </template>
+              </div></el-col>
+            </el-row>
+          </el-header>
+          <!-- 主要内容容器 -->
+          <el-main >
+            <template style="border: #B3C0D1;" >
+              <el-collapse @change="handleChange" style="margin-left: 200px"  accordion>
+                <el-collapse-item  v-for="com in commodity">
+                  <template slot="title">
+                    <i class="el-icon-info">{{com.cid}}</i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   {{com.ctitle}}<p style="margin-left: 50%">{{com.ctime}}</p>
+                  </template>
+                  <div>
+                    地点:{{com.caddress}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    金额:{{com.cmoney}}
+                  </div>
+                  <div>备注:{{com.memo}}</div>
+                  <el-button id="el-button"  @click="deleteCommodity(com.cid)" type="danger" >删除</el-button>
+                </el-collapse-item>
+              </el-collapse>
+
+            </template>
+
+          </el-main>
+        </el-container>
+      </el-container>
+    </div>
+<script>
+ new Vue({
+    el:"#app",
+   mounted:function (){
+     this.getquer();
+     this.getCommodityR();
+   },
+   data() {
+     return {
+       type:'',
+       commodity:[]
+     };
+   },
+   methods: {
+     formatter(row, column) {
+       return row.address;
+     },
+     handleChange(val) {
+       console.log(val);
+     },
+     handleEdit(index, row) {
+       console.log(index, row);
+     },
+     handleDelete(index, row) {
+       console.log(index, row);
+     },
+     getquer(){
+       let geturl = window.location.href
+       let getqyinfo = geturl.split('?')[1]   //qycode=1001&qyname=%E4%BC%81%E4%B8%9A%E5%BF%99   截取到参数部分
+       let getqys = new URLSearchParams('?'+getqyinfo)  //将参数放在URLSearchParams函数中
+         //%E4%BC%81%E4%B8%9A%E5%BF%99
+       this.type = getqys.get('type')
+     },
+     getCommodityR(){
+       axios({
+         //请求方式
+         method:'get',
+         //后端接口路径
+         url:'/api/commodity/getStudentCommodity',
+         params: {
+           type:this.type
+         }
+         //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+       }).then((response) => {
+         this.commodity=[];
+         for (let i = 0; i < response.data.length; i++) {
+           this.books[i] = {
+             cid: response.data[i].cid,
+             ctime: response.data[i].ctime,
+             cmoney:response.data[i].cmoney,
+             caddress:response.data[i].caddress,
+             memo:response.data[i].memo,
+           }
+         }
+       }).catch((error) => {
+       });
+     },
+     deleteCommodity(cid){
+       axios({
+         //请求方式
+         method:'get',
+         //后端接口路径
+         url:'/api/commdity/deleteCommodity',
+         //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+       params: {
+           cid:cid,
+          type:this.type
+       }
+       }).then((response) => {
+       }).catch((error) => {
+         //对error进行处理
+       });
+       this.getCommodityR();
+     }
+   },
+
+
+  });
+
+
+</script>
+    
+</body>
+</html>

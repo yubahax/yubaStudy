@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="../static/css/demo.css">
+  <link rel="stylesheet" href="../static/css/alogin.css">
+</head>
+<body>
+    <div id="app" style="height: 100%">
+      <!-- 外部容器 -->
+      <el-container>
+        <!-- 侧栏容器 -->
+        <el-aside width="200px" class="daohang">
+          <!-- 导航栏 -->
+          <el-menu
+          default-active="3"
+          class="el-menu-vertical-demo"
+         >
+            <a href="/user/personInfo">
+          <el-menu-item index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>个人信息</span>
+            </template>
+          </el-menu-item>
+            </a>
+            <a href="/user/changeInfo">
+            <el-menu-item index="2">
+              <template slot="title">
+                <i class="el-icon-user"></i>
+                <span>修改账号</span>
+              </template>
+            </el-menu-item>
+            </a>
+          <el-menu-item index="3">
+            <template slot="title">
+              <i class="el-icon-reading"></i>
+              <span>我的图书</span>
+            </template>
+          </el-menu-item>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-school"></i>
+              <span>我的帖子</span>
+            </template>
+            <el-menu-item-group>
+              <a href="/user/myCommodity?type=run"><el-menu-item index="4-1">我的跑腿</el-menu-item></a>
+              <a href="/user/myCommodity?type=sold"><el-menu-item index="4-2">我的闲置</el-menu-item></a>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+        </el-aside>
+        <el-container>
+          <!-- 顶栏容器 -->
+          <el-header>
+            <el-row>
+              <el-col :span="20"><div class="grid-content bg-purple">
+                <h1 align="center">渝教育 个人中心</h1>
+              </div></el-col>
+              <el-col :span="4"><div class="grid-content bg-purple-light">
+                <!-- 头像 -->
+                <template>
+                  <div class="demo-type">
+                    <div>
+                      <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                      <el-dropdown trigger="click">
+                        <span class="el-dropdown-link">
+                          用户名<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item icon="el-icon-refresh-left">返回主页</el-dropdown-item>
+                          <el-dropdown-item icon="el-icon-close">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </div>
+                  </div>
+
+
+                </template>
+              </div></el-col>
+            </el-row>
+          </el-header>
+          <!-- 主要内容容器 -->
+          <el-main >
+            <template style="border: #B3C0D1;" >
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+
+              <div class="book_list" v-for="book in books">
+                <div class = "left"></div>
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew4.photophoto.cn%2F20100418%2Fyibenfanyedebaizhishu-juanbiandeshutupian-10774352_1.jpg&refer=http%3A%2F%2Fpicnew4.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670926262&t=2cf58d8e25c4ccdc2c1361139193fe63">
+                <h1> <i class="el-icon-s-management"></i>书名:{{book.title}}</h1>
+                <h2><i class="el-icon-user-solid"></i>作者:{{book.auther}}</h2>
+                <h3><i class="el-icon-menu"></i>类型:{{book.type}}</h3>
+                <h4><i class="el-icon-date"></i>发行时间:{{book.time}}</h4>
+                <h5><i class="el-icon-school"></i>藏书位置:{{book.address}}</h5>
+                <h6><i class="el-icon-info"></i>图书编号:{{book.bid}}</h6>
+                <div class="right">
+                  <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
+                </div>
+              </div>
+            </template>
+
+          </el-main>
+        </el-container>
+      </el-container>
+    </div>
+<script>
+ new Vue({
+    el:"#app",
+   mounted:function (){
+     this.getBook()
+   },
+   data() {
+     return {
+       books:[
+         {bid:1,
+         title:'我的奋斗',
+         address:'图书馆一栋一层',
+         auther:'李斯特',
+         type:'武侠',
+         time:'1999-03-01'}
+       ],
+     }
+   },
+   methods: {
+     formatter(row, column) {
+       return row.address;
+     },
+     handleEdit(index, row) {
+       console.log(index, row);
+     },
+     handleDelete(index, row) {
+       console.log(index, row);
+     },
+     getBook(){
+       axios({
+         //请求方式
+         method:'get',
+         //后端接口路径
+         url:'/api/book/getStudentBook',
+         //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+       }).then((response) => {
+         this.books=[];
+         console.log(this.books);
+         for (let i = 0; i < response.data.length; i++) {
+           this.books[i] = {
+             title: response.data[i].title,
+             auther: response.data[i].auther,
+             address:response.data[i].address,
+             bid:response.data[i].bid,
+             time:response.data[i].time,
+           }
+         }
+       }).catch((error) => {
+       });
+     },
+     returnBook(id){
+       axios({
+         //请求方式
+         method:'get',
+         //后端接口路径
+         url:'/api/book/returnBook',
+         //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+       params: {
+           bid:id
+       }
+       }).then((response) => {
+       }).catch((error) => {
+         //对error进行处理
+       });
+       this.getBook();
+     }
+   }
+  });
+
+
+</script>
+    
+</body>
+</html>

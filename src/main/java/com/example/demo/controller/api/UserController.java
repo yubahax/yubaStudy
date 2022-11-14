@@ -50,15 +50,12 @@ public class UserController {
         service.sendVerifyCode(email);
     }
 
-
-
-    @RequestMapping(value = "/modifyUserInfo",method = RequestMethod.POST)
-    public void  modifyUserInfo(@RequestParam("name") String name,
-                                @RequestParam("password")String password,
+    @RequestMapping(value = "/user/modifyUserInfo",method = RequestMethod.POST)
+    public void  modifyUserInfo(@RequestParam("password")String password,
                                 @RequestParam("email")String email){
         User user = new User();
         int id = redisUtils.getUser().getId();
-        user.setName(name);
+        user.setName(redisUtils.getUser().getName());
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         //密码加密
         user.setEmail(email);
@@ -73,7 +70,7 @@ public class UserController {
                                   @RequestParam("age") int age,
                                   @RequestParam("grade") int grade,
                                   @RequestParam("major") String major,
-                                  @RequestParam("room") String room,HttpSession session){
+                                  @RequestParam("room") String room){
         Student student = new Student();
         User user = redisUtils.getUser();
         student.setAge(age);
@@ -85,6 +82,11 @@ public class UserController {
         student.setSid(sid);
         student.setGrade(grade);
         studentService.modifyStudentInfo(student);
+    }
+
+    @GetMapping("/user/getStudent")
+    public Student getStudent(){
+        return redisUtils.getStudent();
     }
 
 }

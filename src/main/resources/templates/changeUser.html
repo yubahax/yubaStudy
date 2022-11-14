@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/css" src="../static/css/mu.css"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/hi.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id = "form">
+    <el-container>
+        <el-main style="margin-top: 50px">
+            <div style="width: 439px;height: 550px;margin:0 auto; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);text-align: center;">
+                <div style="font-size: large;color: #616161;padding-top: 1px"><h3>修改账号信息</h3> <hr/></div>
+                <div >
+                    <br/>
+                    <el-form ref="form" :model="form" label-width="130px" >
+                        <el-form-item label="新的密码" style="" >
+                            <el-input v-model="form.password" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <el-form-item label="确认密码">
+                            <el-input  v-modle="form.recheck" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <el-form-item label="新的邮箱">
+                            <el-input v-model="form.email" style = "width:200px"></el-input>
+                        </el-form-item>
+                        <div class="bigbox">
+                            <div class="bc">
+                                <el-button  @click="onSubmit" class="bc">保存</el-button>
+                            </div>
+                            <div class="reset">
+                                <el-button class="reset">重置</el-button>
+                            </div>
+                        </div>
+                    </el-form>
+                </div>
+            </div>
+        </el-main>
+    </el-container>
+</div>
+
+</body>
+<script>
+
+    new Vue({
+        el:"#form",
+        data:{
+            form: {
+                email: '',
+                recheck: '',
+                password: '',
+            }
+        },
+        methods: {
+            onSubmit() {
+                axios({
+                    //请求方式
+                    method:'post',
+                    //后端接口路径
+                    url:'/api/user/modifyUserInfo',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        //attributeName为属性名，value为属性值
+                        email: '',
+                        password: '',
+                    }
+                }).then((response) => {
+                }).catch((error) => {
+                });
+            }
+        }
+
+    });
+</script>
+
+</html>
+

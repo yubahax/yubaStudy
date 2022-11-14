@@ -1,0 +1,67 @@
+
+.el-form-item__label {/*label的设置*/
+    text-align: right;
+    padding-right: 0px;
+    white-space: pre;
+}
+a{text-decoration:none;color:#000;}
+
+element.style {
+    margin-left: 130px;
+
+}
+
+.el-form-item__content {
+    text-align: left;
+    padding-left: 25px;
+}
+.el-input__inner{
+    height: 30.8px;
+}
+
+.el-input{
+    height: 30.8px;
+}
+.el-input-number__decrease, .el-input-number__increase{
+   line-height: 30.8px;
+    margin-top: 3px;
+}
+
+.el-select .el-input .el-select__caret {
+    text-align: center;
+    line-height: 29.2px;
+}
+
+.el-form-item {/*每一行的设置*/
+   margin-bottom: 10px;
+}
+
+
+#form {
+    width: 500px;height: 550px;margin:0 auto; ;text-align: center;
+}
+body {
+    /* 溢出隐藏 */
+    overflow-x: hidden;
+    display: flex;
+    /* 渐变方向从左到右 */
+    background: linear-gradient(to right, rgb(231, 229, 245), rgb(121, 207, 131));
+}
+
+.bigbox{
+    height: 33px;
+    margin-top: 39px;
+    display: flex;
+}
+
+.bc,
+.reset{
+
+    flex: 1;
+    height: 100%;
+}
+
+
+.el-button {
+    line-height: 0;
+}

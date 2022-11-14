@@ -1,0 +1,154 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.el-header, .el-footer {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  width: 92%;
+  margin-left: 200px;
+  line-height: 60px;
+}
+a{text-decoration:none;color:#000;}
+.el-aside {
+  /* background-color: #ce2424; */
+  position:fixed;
+  color: #333;
+  text-align: center;
+  height: 100%;
+  line-height: 200px;
+}
+
+.el-main {
+
+  color: #333;
+  text-align: center;
+  /* line-height: 160px; */
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+/* 以上为element布局容器的css设置 */
+
+/* 消除侧边导航栏出现滚动条 */
+.el-aside::-webkit-scrollbar {
+  display: none;
+}
+
+.el-menu,.el-aside{
+  border-radius: 4px;
+  background-color: #E9EEF3;
+}
+
+.el-avatar{
+  position: relative;
+  top: 7px;
+}
+
+.el-descriptions-item{
+  background-color: #E9EEF3;
+}
+
+.book_list{
+  position: relative;
+  width: 80%;
+  height: 200px;
+  background-color:white;
+  margin-left: 20%;
+  border-bottom: whitesmoke 3px solid;
+}
+.book_list>img{
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  width: 180px;
+  height: 160px;
+}
+.book_list>h1{
+  position: absolute;
+  left: 250px;
+  top: 20px;
+  font-size: 24px;
+}
+.book_list>h2{
+  position: absolute;
+  left: 250px;
+  top: 75px;
+
+  font-size: 16px;
+  border-radius: 15px;
+  font-weight: normal;
+}
+.book_list>h3{
+  position: absolute;
+  left: 450px;
+  top: 75px;
+
+  font-size: 16px;
+  border-radius: 15px;
+  font-weight: normal;
+}
+.book_list>h4{
+  position: absolute;
+  left: 650px;
+  top: 75px;
+
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: normal;
+}
+.book_list>h5{
+  position: absolute;
+  left: 250px;
+  top: 140px;
+  font-size: 16px;
+  font-weight: normal;
+}
+.book_list>h6{
+  position: absolute;
+  right: 160px;
+  bottom: 5px;
+  font-size: 18px;
+  font-weight: normal;
+}
+.right> #el-button {
+  position: absolute;
+  right: 8px;
+  top: 70px;
+  width: 100px;
+  height: 40px;
+}
+.right{
+  position: absolute;
+  right: 0px;
+  width: 120px;
+  background-color: #B3C0D1;
+  height: 100%;
+}
+.left{
+  position: absolute;
+  left: 240px;
+  top: 65px;
+  width: 650px;
+  background-color: whitesmoke;
+  height: 35px;
+  border-radius: 10px;
+}
+
+
+
+
+

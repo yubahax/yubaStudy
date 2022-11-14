@@ -15,6 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("commodity")
 public class Commodity implements Serializable {
+
     @TableId(type = IdType.AUTO)
     private int cid;
 

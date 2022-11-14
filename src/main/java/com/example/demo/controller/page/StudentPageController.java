@@ -82,4 +82,23 @@ public class StudentPageController {
         return "login";
     }
 
+    @RequestMapping("/user/mybook")
+    public String studentBook(){
+        return "book";
+    }
+
+    @RequestMapping({"/user/personInfo","/user"})
+    public String personInfo(){
+        return "personPage";
+    }
+
+    @RequestMapping("/user/changeInfo")
+    public String changeInfo(){
+        return "changeUser";
+    }
+
+    @RequestMapping("/user/myCommodity")
+    public String studentCommodity(){
+        return "commodity";
+    }
 }
