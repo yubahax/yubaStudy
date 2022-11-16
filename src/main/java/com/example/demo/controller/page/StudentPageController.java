@@ -39,7 +39,7 @@ public class StudentPageController {
             user = userService.selectUserByName(name);
             redisUtils.set(name,user);
         }
-        if ("admin".equals(user.getRole())) {return "admin";}
+        if ("admin".equals(user.getRole())) {return "redirect:/teacherInfo";}
         if (studentService.ifStudentInfoIsExist(user.getId())) {
             return "index";
         } else {

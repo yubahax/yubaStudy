@@ -1,0 +1,64 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.el-header, .el-footer {
+  background-color: #373D41;
+  color: #fff;
+  text-align: center;
+  line-height: 60px;
+}
+a{text-decoration:none;color:#000;}
+.el-aside {
+  /* background-color: #ce2424; */
+  color: #333;
+  text-align: center;
+  height: 960px;
+  line-height: 200px;
+}
+
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+  /* line-height: 160px; */
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+/* 以上为element布局容器的css设置 */
+
+/* 消除侧边导航栏出现滚动条 */
+.el-aside::-webkit-scrollbar {
+  display: none;
+}
+
+.el-menu,.el-aside{
+  border-radius: 4px;
+  background-color: #545c64;
+
+}
+
+.el-avatar{
+  position: relative;
+  top: 7px;
+}
+
+.el-descriptions-item{
+  background-color: #E9EEF3;
+}
+.el-dropdown-link{
+  color:#fff;
+}

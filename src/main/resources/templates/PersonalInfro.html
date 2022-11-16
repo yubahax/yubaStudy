@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辅导员管理系统</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.zhimg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.zhimg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="../static/css/demo1.css">
+</head>
+<body>
+    <div id="app000" style="height: 100%">
+      <!-- 外部容器 -->
+      <el-container>
+        <!-- 侧栏容器 -->
+        <el-aside width="200px" class="daohang">
+          <!-- 导航栏 -->
+          <el-menu
+          default-active="2"
+          :router="true"
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b">
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>事务办理</span>
+            </template>
+            <el-menu-item-group>
+              <a href="/hangout"><el-menu-item index="1-1">请假审批</el-menu-item></a>
+              <a href="/dailyCheck"><el-menu-item index="1-2">健康打卡</el-menu-item></a>
+            </el-menu-item-group>
+          </el-submenu>
+
+            <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span>督导班级</span>
+            </template>
+              <el-menu-item-group>
+                <a href="/getClassList">
+                  <el-menu-item index="2-1">班级列表</el-menu-item>
+                </a>
+              </el-menu-item-group>
+          </el-submenu>
+
+            <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-reading"></i>
+              <span>个人中心</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="3-1">基本信息</el-menu-item>
+              <el-menu-item index="3-2">账号信息</el-menu-item>
+              <el-menu-item index="3-3">修改账号</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+        </el-aside>
+        <el-container>
+          <!-- 顶栏容器 -->
+          <el-header>
+            <el-row>
+              <el-col :span="20" ><div class="grid-content bg-purple">
+                <h1>辅导员管理系统</h1>
+              </div></el-col>
+              <el-col :span="4"><div class="grid-content bg-purple-light">
+                <!-- 头像 -->
+                <template>
+                  <div class="demo-type">
+                      <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                      <el-dropdown trigger="click">
+                        <span class="el-dropdown-link">
+                          用户名<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                          <el-dropdown-menu slot="dropdown">
+                              <el-dropdown-item icon="el-icon-plus">个人中心</el-dropdown-item>
+                              <el-dropdown-item icon="el-icon-close">退出登录</el-dropdown-item>
+                          </el-dropdown-menu>
+                      </el-dropdown>
+                  </div>
+                </template>
+              </div></el-col>
+            </el-row>
+          </el-header>
+          <!-- 主要内容容器 -->
+          <el-main>
+            <template >
+            
+              <el-descriptions class="margin-top"  :column="1" :size="size" border>
+                <template slot="extra">
+                </template>
+                <el-descriptions-item>
+                  <template slot="label">
+                    <i class="el-icon-user"></i>
+                    姓名
+                  </template>
+                 符玥
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                    <i class="el-icon-user"></i>
+                    教师工号
+                  </template>
+                  2020444123
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                      <i class="el-icon-user"></i>
+                      性别
+                  </template>
+                  女
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                    <i class="el-icon-user"></i>
+                    年龄
+                  </template>
+                  28
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                    <i class="el-icon-info"></i>
+                    学历
+                  </template>
+                  硕士
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template slot="label">
+                    <i class="el-icon-info"></i>
+                    身份证
+                  </template>
+                  5001081231234124
+                </el-descriptions-item>
+              </el-descriptions>        
+            </template>
+          </el-main>
+        </el-container>
+      </el-container>
+    </div>
+<script>
+var Main = {
+    mounted:function (){
+    },
+    data () {
+        return {
+            size: '',
+        };
+    },
+    methods: {
+      handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      },
+    },
+  }
+var Ctor = Vue.extend(Main)
+new Ctor().$mount('#app000')
+</script>
+    
+</body>
+</html>

@@ -44,7 +44,7 @@ public interface TeacherMapper extends BaseMapper<Teacher>{
             ")\n" +
             "AND\n" +
             "sid not in(select sid from dailycheck where checktime = #{time})")
-    List<Student> getNoCheckStudent(@Param("sid") int id ,@Param("id") String time);
+    List<Student> getNoCheckStudent(@Param("id") int id ,@Param("time") String time);
 
 
     @Update("update teacher set tname = #{tname},sex = #{sex},age = #{age},education = #{education},idcard = #{idcard},appointment = #{appointment} where id = #{id}")
