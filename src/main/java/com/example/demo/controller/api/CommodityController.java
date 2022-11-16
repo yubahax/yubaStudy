@@ -4,12 +4,10 @@ package com.example.demo.controller.api;
 import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Commodity;
 import com.example.demo.service.CommodityService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -32,5 +30,15 @@ public class CommodityController {
     public void deleteCommodity(@RequestParam("cid") int cid,@RequestParam("type") String type){
         int sid = redisUtils.getStudent().getSid();
         commodityService.deleteCommodity(cid,type,sid);
+    }
+
+    @PostMapping("/sendCommodity")
+    public void sendCommodity(@RequestBody Commodity commodity) {
+        int sid = redisUtils.getStudent().getSid();
+        commodity.setSid(sid);
+        String time = commodity.getCtime().substring(0,10);
+        commodity.setCtime(time);
+        commodityService.addCommodity(commodity);
+
     }
 }

@@ -64,8 +64,8 @@
                     //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
                     params: {
                         //attributeName为属性名，value为属性值
-                        email: '',
-                        password: '',
+                        email: this.email,
+                        password: this.password,
                     }
                 }).then((response) => {
                 }).catch((error) => {

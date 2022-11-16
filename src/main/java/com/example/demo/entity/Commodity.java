@@ -40,6 +40,9 @@ public class Commodity implements Serializable {
     @TableField("ctype")
     private String ctype;
 
+    @TableField("ctitle")
+    private String ctitle;
+
 
 
 }

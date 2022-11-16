@@ -33,10 +33,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getAllBook() {
-        List<Book> books = (List<Book>) redisUtils.get("allisalivebook");
+        List<Book> books = (List<Book>) redisUtils.get("allBook");
         if (books == null) {
             books = bookMapper.selectList(null);
-            redisUtils.set("allisalivebook", books);
+            redisUtils.set("allBook", books);
         }
         return books;
     }

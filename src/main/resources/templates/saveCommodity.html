@@ -10,10 +10,10 @@
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <link rel="stylesheet" href="../static/css/demo.css">
-  <link rel="stylesheet" href="../static/css/alogin.css">
+
 </head>
 <body>
     <div id="app" style="height: 100%">
@@ -23,17 +23,20 @@
         <el-aside width="200px" class="daohang">
           <!-- 导航栏 -->
           <el-menu
-          default-active="1"
+          default-active="4"
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose">
+            <a href="/user/personInfo">
           <el-menu-item index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>个人信息</span>
             </template>
           </el-menu-item>
-            <a href="/user/changeInfo"><el-menu-item index="2" >
+              </a>
+            <a href="/user/changeInfo">
+              <el-menu-item index="2" >
               <template slot="title">
                 <i class="el-icon-user"></i>
                 <span>修改账号</span>
@@ -44,7 +47,7 @@
             <el-menu-item index="3">
             <template slot="title">
               <i class="el-icon-reading"></i>
-              <a href="book.html"><span>我的图书</span></a>
+              <span>我的图书</span>
             </template>
           </el-menu-item>
             </a>
@@ -56,7 +59,7 @@
             <el-menu-item-group>
               <a href="/user/myCommodity?type=run"><el-menu-item index="4-1">我的跑腿</el-menu-item></a>
               <a href="/user/myCommodity?type=sold"><el-menu-item index="4-2">我的闲置</el-menu-item></a>
-              <a href="/user/sendCommodity"><el-menu-item index="4-3">发布帖子</el-menu-item></a>
+             <el-menu-item index="4-3">发布帖子</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -92,75 +95,46 @@
           <!-- 主要内容容器 -->
           <el-main >
             <template >
+              <div style="width: 900px;height: 1200px;position:absolute;top: 100px;left: 330px">
+              <el-form ref="form" :model="form" label-width="80px" style="border-radius: 15px;width: 880px;border: whitesmoke 2px solid;">
+                <el-form-item label="帖子标题" style="margin-top: 30px;margin-right: 30px">
+                  <el-input v-model="form.ctitle"></el-input>
+                </el-form-item>
+                <el-form-item label="位置"style="margin-top: 30px;margin-right: 30px">
+                  <el-col :span="6">
+                  <el-select v-model="form.caddress" placeholder="请选择位置">
+                    <el-option label="容园" value="容一">容一</el-option>
+                    <el-option label="容园" value="容二">容二</el-option>
+                    <el-option label="容园" value="容三">容三</el-option>
+                    <el-option label="和园" value="和一">和一</el-option>
+                    <el-option label="和园" value="和二">和二</el-option>
+                    <el-option label="和园" value="和三">和三</el-option>
+                  </el-select>
+                  </el-col>
+                </el-form-item>
+                <el-form-item label="活动时间"style="margin-top: 30px;margin-right: 30px">
+                  <el-col :span="11">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.ctime" style="width: 100%;"></el-date-picker>
+                  </el-col>
 
-              <el-descriptions style="margin-top: 50px;margin-left: 300px"  :column="1" :size="size" border>
-                <template slot="extra">
-                </template>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-user"></i>
-                    姓名
-                  </template>
-                  {{this.user.name}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-user"></i>
-                    学号
-                  </template>
-                  {{this.user.sid}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-user"></i>
-                    性别
-                  </template>
-                  {{this.user.sex}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-mobile-phone"></i>
-                    手机号
-                  </template>
-                  18100000000
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-location-outline"></i>
-                    年龄
-                  </template>
-                  {{this.user.age}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-location-outline"></i>
-                    年级
-                  </template>
-                  {{this.user.grade}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-location-outline"></i>
-                    专业
-                  </template>
-                  {{this.user.major}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-location-outline"></i>
-                    寝室号
-                  </template>
-                  {{this.user.room}}
-                </el-descriptions-item>
-                <el-descriptions-item>
-                  <template slot="label">
-                    <i class="el-icon-office-building"></i>
-                    联系地址
-                  </template>
-                  江苏省苏州市吴中区吴中大道 1188 号
-                </el-descriptions-item>
-              </el-descriptions>
-
+                </el-form-item>
+                <el-form-item label="金额"style="margin-top: 30px;margin-right: 30px">
+                  <el-input v-model="form.cmoney"></el-input>
+                </el-form-item>
+                <el-form-item label="帖子类型"style="margin-top: 30px;margin-right: 30px">
+                  <el-radio-group v-model="form.ctype">
+                    <el-radio label="跑腿服务" value="run"></el-radio>
+                    <el-radio label="出闲置物品" value="sold"></el-radio>
+                  </el-radio-group>
+                </el-form-item>
+                <el-form-item label="备注"style="margin-top: 30px;margin-right: 30px">
+                  <el-input type="textarea" v-model="form.memo"></el-input>
+                </el-form-item>
+                <div>
+                  <el-button @click="goTo" style="background-color: aqua">立即创建</el-button>
+                </div>
+              </el-form>
+              </div>
             </template>
 
           </el-main>
@@ -168,16 +142,19 @@
       </el-container>
     </div>
 <script>
-var Main = {
-    mounted:function (){
-    this.goTo()
-    },
+new Vue({
+   el:"#app",
   data () {
     return {
-      size: '',
-      user:[
-      ]
-    };
+      form: {
+        ctime:'',
+        ctype:'',
+        cmoney:'',
+        ctitle:'',
+        caddress:'',
+        memo:'',
+      }
+    }
   },
     methods: {
       handleOpen(key, keyPath) {
@@ -186,24 +163,28 @@ var Main = {
       handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
+      onSubmit() {
+        console.log('submit!');
+      },
       goTo(){
         axios({
           //请求方式
-          method:'get',
+          method:'post',
           //后端接口路径
-          url:'/api/user/getStudent',
+          url:'/api/commodity/sendCommodity',
+          data:{
+              cid:'',
+              sid:'',
+              ctime:this.form.ctime,
+              ctype:this.form.ctype,
+              cmoney:this.form.cmoney,
+              isalive:1,
+              ctitle:this.form.ctitle,
+              memo:this.form.memo,
+              caddress:this.form.caddress
+          },
           //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
         }).then((response) => {
-          this.user=[];
-            this.user = {
-              sid: response.data.sid,
-              name: response.data.sname,
-              sex:response.data.sex,
-              age:response.data.age,
-              major:response.data.major,
-              grade:response.data.grade,
-              room:response.data.room,
-            }
         }).catch((error) => {
           //对error进行处理
         });
@@ -211,8 +192,7 @@ var Main = {
     },
 
   }
-var Ctor = Vue.extend(Main)
-new Ctor().$mount('#app')
+);
 
 
 </script>

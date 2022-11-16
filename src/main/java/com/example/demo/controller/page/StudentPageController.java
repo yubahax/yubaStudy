@@ -82,7 +82,7 @@ public class StudentPageController {
         return "login";
     }
 
-    @RequestMapping("/user/mybook")
+    @RequestMapping({"/user/mybook","/user/book.html"})
     public String studentBook(){
         return "book";
     }
@@ -100,5 +100,10 @@ public class StudentPageController {
     @RequestMapping("/user/myCommodity")
     public String studentCommodity(){
         return "commodity";
+    }
+
+    @RequestMapping("/user/sendCommodity")
+    public String sendCommodity(){
+        return "saveCommodity";
     }
 }

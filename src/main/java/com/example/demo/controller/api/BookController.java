@@ -19,7 +19,7 @@ public class BookController {
     @Resource
     BookService bookService;
 
-    @PostMapping("/returnBook")
+    @GetMapping("/returnBook")
     public void studentReturnBook(@RequestParam("bid") int bid) {
         int sid = redisUtils.getStudent().getSid();
         bookService.returnBook(bid,sid);

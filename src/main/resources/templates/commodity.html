@@ -23,7 +23,7 @@
         <el-aside width="200px" class="daohang">
           <!-- 导航栏 -->
           <el-menu
-          default-active="4-1"
+          default-active="4"
           class="el-menu-vertical-demo"
          >
             <a href="/user/personInfo">
@@ -58,6 +58,7 @@
             <el-menu-item-group>
               <a href="/user/myCommodity?type=run"><el-menu-item index="4-1">我的跑腿</el-menu-item></a>
               <a href="/user/myCommodity?type=sold"><el-menu-item index="4-2">我的闲置</el-menu-item></a>
+              <a href="/user/sendCommodity"><el-menu-item index="4-3">发布帖子</el-menu-item></a>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -121,7 +122,9 @@
     el:"#app",
    mounted:function (){
      this.getquer();
+     //从路径取参数
      this.getCommodityR();
+     //携带参数向服务器请求数据
    },
    data() {
      return {
@@ -162,7 +165,7 @@
        }).then((response) => {
          this.commodity=[];
          for (let i = 0; i < response.data.length; i++) {
-           this.books[i] = {
+           this.commodity[i] = {
              cid: response.data[i].cid,
              ctime: response.data[i].ctime,
              cmoney:response.data[i].cmoney,
@@ -178,7 +181,7 @@
          //请求方式
          method:'get',
          //后端接口路径
-         url:'/api/commdity/deleteCommodity',
+         url:'/api/commodity/deleteCommodity',
          //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
        params: {
            cid:cid,
