@@ -21,13 +21,11 @@ public class CommodityServiceImpl implements CommodityService {
     RedisUtils redisUtils;
 
     @Override
-    public List<Commodity> getCommodityByType(String ctype){
-        List<Commodity> commodities = (List<Commodity>) redisUtils.get(ctype+"commodity");
+    public List<Commodity> getCommodity(){
+        List<Commodity> commodities = (List<Commodity>) redisUtils.get("commodity");
         if (commodities == null) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("ctype", ctype);
-            commodities = commodityMapper.selectByMap(map);
-            redisUtils.set(ctype + "commodity", commodities);
+            commodities = commodityMapper.selectList(null);
+            redisUtils.set("commodity", commodities);
         }
         return commodities;
     };
@@ -47,12 +45,12 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public void addCommodity(Commodity commodity) {
-        List<Commodity> commodities = (List<Commodity>) redisUtils.get(commodity.getCtype()+"commodity");
+        List<Commodity> commodities = (List<Commodity>) redisUtils.get("commodity");
         //获取主页面commodities缓存
         if (commodities != null) {
             commodities.add(0,commodity);
             //插入至第一位
-            redisUtils.set(commodity.getCtype() + "commodity", commodities);
+            redisUtils.set("commodity", commodities);
             //更新主页面中commodities缓存
         }
         commodities = (List<Commodity>) redisUtils.get("student"+commodity.getSid()+commodity.getCtype()+"commodity");

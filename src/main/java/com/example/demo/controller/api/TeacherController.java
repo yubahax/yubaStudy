@@ -78,4 +78,10 @@ public class TeacherController {
         return teacherService.getNoCheckStudent(id);
     }
 
+    @GetMapping("/checkStudent")
+    public void checkStudent(@RequestParam("sid") int sid){
+        int id =redisUtils.getUser().getId();
+        teacherService.checkStudent(sid, id);
+    }
+
 }

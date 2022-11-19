@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body style="background-color: whitesmoke;">
+<div id="main">
+    <div style="width: 100%;position: absolute">
+        <div>
+        <el-menu class="el-menu-my" mode="horizontal" >
+            <el-menu-item index="1">
+                <el-image :src="url"
+                style="width: 100px;height: 55px">
+                </el-image>
+            </el-menu-item>
+            <el-menu-item index="2"><a href="/user">个人中心</a></el-menu-item>
+            <el-menu-item index="3">
+              校广场
+            </el-menu-item>
+            <el-menu-item index="4"><a href="/banshi">办事中心</a></el-menu-item>
+            <el-menu-item index="5"><a href="/library">线上图书馆</a></el-menu-item>
+            <el-menu-item index="6" style="padding-left: 100px">
+                <span style="background-color: whitesmoke;width: 100px;height: 30px;text-align: center;border: #333333 1px solid; font-size: 14px">搜索功能维护中</span>
+            </el-menu-item>
+            <el-menu-item index="7" style="padding-left: 0px">
+            <el-button disable><a v-bind:href="'/center/roomadd?buildingId='+this.users.id+'&buildingName='+this.users.word" >搜索</a></el-button>
+            </el-menu-item>
+        </el-menu>
+
+        </div>
+        <div style="position: absolute;top: 145px;width: 100%;">
+
+            <el-carousel indicator-position="outside" style="width: 800px;margin-left: 300px;margin-top: 10px">
+                <el-carousel-item>
+                    <img  style="width: 800px;height: 300px" src="https://web.cqust.edu.cn/http/77726476706e69737468656265737421f3f652d224217d436a468ca88d1b203b/authserver/cqustNewDz/static/web/images/bg1.jpg?vpn-1" >
+                </el-carousel-item>
+                <el-carousel-item>
+                    <img style="width: 800px;height: 300px" src="https://web.cqust.edu.cn/http/77726476706e69737468656265737421f3f652d224217d436a468ca88d1b203b/authserver/cqustNewDz/static/web/images/bg1.jpg?vpn-1" >
+                </el-carousel-item>
+                <el-carousel-item>
+                    <img style="width: 800px;height: 300px" src="https://web.cqust.edu.cn/http/77726476706e69737468656265737421f3f652d224217d436a468ca88d1b203b/authserver/cqustNewDz/static/web/images/bg1.jpg?vpn-1" >
+                </el-carousel-item>
+            </el-carousel>
+
+            <div style="width: 800px;
+            left: 300px;top: 350px;
+            background-color: whitesmoke;position: absolute">
+                <div style="width: 750px;
+                            border-radius: 10px;
+                            background-color: white;
+                            height: 300px;
+                            position: relative;
+                            left: 30px;
+                            margin-top: 10px;
+                            " v-for="com in commodity">
+                    <img src="https://imgsa.baidu.com/forum/pic/item/dab44aed2e738bd4b7ff803ca68b87d6267ff9e4.jpg"
+                    style="width:250px ;height:200px;margin-top: 50px;margin-left: 30px ">
+                    <p style="position: absolute;width: 350px;top: 10px;left: 280px;font-family: 微软雅黑;font-size: 26px;" >{{com.ctitle}} <el-divider></el-divider></p>
+                    <p style="position: absolute;width: 350px;top: 80px;left: 280px;">{{com.memo}}</p>
+                    <p style="position: absolute;width: 60px;height:25px;top: 20px;left: 580px;padding-top: 5px;text-align: center;background-color: #69b3f0;border-radius: 5px">
+                        <i class="el-icon-eleme"></i>
+                        {{com.ctype}}
+                    </p>
+                    <p style="position: absolute;bottom: 20px;left: 280px">{{com.ctime}}</p>
+                    <p style="position: absolute;bottom: 20px;right: 50px">{{com.caddress}}&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 22px;color: red">{{com.cmoney}}</span>元</p>
+
+                </div>
+
+            </div>
+            <div style="background-color: white;width: 300px;height: 400px;position: absolute;
+                       top: 20px;right: 50px ">
+                <img src="'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'"
+                style="width: 200px;height: 300px;margin-left: 50px;margin-top: 30px"
+                >
+            <div style="position: absolute;bottom: 30px;left: 100px">欢迎：侯名权</div>
+            </div>
+
+            <div style="background-color: white;width: 240px;height: 550px;position: fixed;
+                       top: 150px;left: 40px ;">
+              <div style="width: 240px;height: 110px;">
+                  <p style="width: 240px;padding-top: 5px;font-size: 32px;margin-top: 1px;text-align: center;">
+                      最新帖子
+                  </p>
+                  <p v-for="item in newCommodity" style="width: 240px;padding-top: 5px;font-size: 16px;margin-top: 1px;text-align: center;background-color: #69b3f0;border-radius: 5px">
+                      <i class="el-icon-eleme"></i>
+                      {{item.ctype}}-{{item.caddress}}-{{item.title}}<br/>
+                      {{item.ctime}}
+                  </p>
+
+
+              </div>
+
+            </div>
+
+            <el-calendar v-model="value" style="width: 300px;height: 680px;position: absolute;top:480px;right: 50px">
+            </el-calendar>
+<!--            <div style="width: 100%;height: 300px;background-color: black;position:absolute;bottom: 6px">-->
+
+<!--            </div>-->
+        </div>
+
+
+
+    </div>
+</div>
+
+</body>
+<script>
+    new Vue({
+        el: "#main",
+        mounted: function () {
+            this.getCommodity()
+            this.getNewCommodity()
+        },
+        data() {
+            return {
+                value: new Date(),
+                newCommodity:[],
+                users: {
+                    id: '30000',
+                    word: 'hellow wordl'
+                },
+                activeIndex: '1',
+                activeIndex2: '1',
+                url: 'https://imgsa.baidu.com/forum/pic/item/dab44aed2e738bd4b7ff803ca68b87d6267ff9e4.jpg',
+                commodity: [],
+            };
+        },
+        methods: {
+            getNewCommodity(){
+                axios({
+                    //请求方式
+                    method: 'get',
+                    //后端接口路径
+                    url: '/api/commodity/getNewCommodity',
+
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                }).then((response) => {
+                    this.newCommodity = [];
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.newCommodity[i] = {
+                            ctime: response.data[i].ctime,
+                            caddress: response.data[i].caddress,
+                            ctype:response.data[i].ctype,
+                            ctitle:response.data[i].ctitle,
+                        }
+                    }
+                }).catch((error) => {
+                });
+            },
+            getCommodity() {
+                axios({
+                    //请求方式
+                    method: 'get',
+                    //后端接口路径
+                    url: '/api/commodity/getCommodity',
+                    params: {
+
+                    }
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                }).then((response) => {
+                    this.commodity = [];
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.commodity[i] = {
+                            cid: response.data[i].cid,
+                            ctime: response.data[i].ctime,
+                            cmoney: response.data[i].cmoney,
+                            caddress: response.data[i].caddress,
+                            memo: response.data[i].memo,
+                            ctype:response.data[i].ctype,
+                            ctitle:response.data[i].ctitle,
+                        }
+                    }
+                }).catch((error) => {
+                });
+            }
+        }
+    });
+
+</script>
+<style>
+    .el-carousel__item h3 {
+        color: #475669;
+        font-size: 18px;
+        opacity: 0.75;
+        line-height: 300px;
+        margin: 0;
+    }
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
+</style>
+</html>

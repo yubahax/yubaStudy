@@ -100,6 +100,7 @@
                             <el-table-column
                                     prop="id"
                                     label="编号"
+                                    type="selection"
                                     width="200">
                             </el-table-column>
                             <el-table-column
@@ -127,6 +128,13 @@
                             >
                                <i style="color: red">未打卡</i>
                             </el-table-column>
+                            <el-table-column label="操作">
+                                <template slot-scope="scope">
+                                    <el-button
+                                            size="mini"
+                                            @click="check(scope.row)">提醒</el-button>
+                                </template>
+                            </el-table-column>
                         </el-table>
                     </template>
                 </div>
@@ -142,7 +150,13 @@
         },
         data() {
             return {
-                stulist:[
+                stulist:[{
+                    id: '231',
+                    sid: "2-31",
+                    sname: "2-2-",
+                    major: "2020",
+                    grade: '2020'
+                }
                 ]
             }
         },
@@ -162,7 +176,32 @@
                     method:'get',
                     //后端接口路径
                     url:'/api/auth/getNoCheckStudent',
+
                     //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能和post配合使用
+                }).then((response) => {
+                    this.stulist=[];
+                    console.log(this.stulist);
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.stulist[i] = {
+                            id: response.data[i].id,
+                            sid: response.data[i].sid,
+                            sname:response.data[i].sname,
+                            major:response.data[i].major,
+                            grade:response.data[i].grade,
+                        }
+                    }
+                }).catch((error) => {
+                });
+            },
+            check(row){
+                axios({
+                    //请求方式
+                    method:'get',
+                    //后端接口路径
+                    url:'/api/auth/checkStudent',
+                    params:{
+                        sid:row.sid
+                    }
                 }).then((response) => {
                     this.stulist=[];
                     console.log(this.stulist);

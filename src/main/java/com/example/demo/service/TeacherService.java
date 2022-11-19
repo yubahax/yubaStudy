@@ -58,4 +58,6 @@ public interface TeacherService {
      * @param teacher 将要修改信息封装为teacher实体类
      */
     public void modifyTeacherInfo(Teacher teacher);
+
+    public void checkStudent(int sid,int id);
 }

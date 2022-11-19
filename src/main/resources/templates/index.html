@@ -1,1 +1,106 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="../static/favicon.ico"><title>vuestudy</title><script defer="defer" src="../static/js/chunk-vendors.d36e7054.js"></script><script defer="defer" src="../static/js/app.f5f8b6ab.js"></script><link href="../static/css/chunk-vendors.84eb3a6a.css" rel="stylesheet"><link href="../static/css/app.6fb9e403.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but vuestudy doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 生产环境版本，优化了尺寸和速度 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="../static/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+
+        <div id="app">
+            <div class="container">
+                <div class="aside">
+                    <template>
+                          <div class="avatar">
+                            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="80"></el-avatar>
+                          </div>
+                          <el-descriptions class="margin-top" :column="1" :size="size">
+                            <el-descriptions-item label="姓名">{{this.student.sname}}</el-descriptions-item>
+                            <el-descriptions-item label="专业">{{this.student.major}}</el-descriptions-item>
+                            <el-descriptions-item label="年级">{{this.student.grade}}</el-descriptions-item>
+                          </el-descriptions>
+                    </template>
+                </div>
+                <div class="box">
+                    <el-container>
+                        <el-header><span class="biaoti">学生个人主页</span></el-header>
+                        <el-main>
+                            <!-- 第一组 -->
+                            <el-row :gutter="20">
+                                <el-col :span="12"><div class="grid-content bg-purple">
+                                    <i class="el-icon-user"></i>
+                                    <a href="/user">个人中心</a>
+                                </div></el-col>
+                                <el-col :span="12"><div class="grid-content bg-purple">
+                                    <i class="el-icon-notebook-2"></i>
+                                    <a href="/library">线上图书馆</a>
+                                </div></el-col>
+                              </el-row>
+                              <!--第二组  -->
+                              <el-row :gutter="20">
+                                <el-col :span="12"><div class="grid-content bg-purple">
+                                    <i class="el-icon-sunny"></i>
+                                    <a href="/ground">校广场</a>
+                                </div></el-col>
+                                <el-col :span="12"><div class="grid-content bg-purple">
+                                    <i class="el-icon-office-building"></i>
+                                    <a href="/banshi">网上办事</a>
+                                </div></el-col>
+                              </el-row>
+                        </el-main>
+                    </el-container>
+                 </div>
+
+            </div>
+
+        </div>
+
+
+    <script>
+        var Main = {
+    mounted:function (){
+        this.getStudent()
+    }
+            ,data () {
+      return {
+        size: '',
+          student:[]
+      };
+    },
+            methods: {
+                getStudent(){
+                    axios({
+                        //请求方式
+                        method:'get',
+                        //后端接口路径
+                        url:'/api/user/getStudent',
+                        //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    }).then((response) => {
+                        this.student=[];
+                            this.student = {
+                                sname: response.data.sname,
+                                grade: response.data.grade,
+                                major:response.data.major,
+                            }
+                    }).catch((error) => {
+                    });
+                },
+            }
+
+  }
+var Ctor = Vue.extend(Main)
+new Ctor().$mount('#app')
+
+    </script>
+    
+</body>
+</html>

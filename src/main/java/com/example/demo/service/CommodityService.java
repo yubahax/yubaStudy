@@ -8,10 +8,10 @@ public interface CommodityService {
 
     /**
      * 由于跑腿信息和闲置信息共用一个数据库，根据type选择对应的信息（select）
-     * @param ctype 类型 run代表跑腿 sold代表闲置物品信息
+     *
      * @return 对应实体类
      */
-    public List<Commodity> getCommodityByType(String ctype);
+    public List<Commodity> getCommodity();
 
 
     /**

@@ -26,6 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/do")
                 .defaultSuccessUrl("/index",true)
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .and()
                 .csrf().disable();
     }
     @Override

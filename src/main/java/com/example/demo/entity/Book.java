@@ -31,6 +31,15 @@ public class Book implements Serializable {
     @TableField("type")
     private String type;
 
+    @TableField("wordage")
+    private int wordage;
+
+    @TableField("nationality")
+    private int nationality;
+
+    @TableField("time")
+    private int time;
+
     @TableField("isalive")
     private int isalive;
 }

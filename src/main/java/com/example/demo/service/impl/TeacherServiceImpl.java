@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.EmailBox;
 import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.Teacher;
@@ -64,5 +65,18 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void modifyTeacherInfo(Teacher teacher) {
         teacherMapper.updateTeacherInfo(teacher);
+    }
+
+    @Override
+    public void checkStudent(int sid,int id) {
+        EmailBox emailBox = new EmailBox();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String time = format.format(date);
+        emailBox.setGettime(time);
+        emailBox.setSid(sid);
+        emailBox.setSendid(id);
+        emailBox.setTxt("请尽快完成本日健康打卡！");
+        teacherMapper.checkStudent(emailBox);
     }
 }

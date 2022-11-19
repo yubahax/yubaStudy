@@ -2,7 +2,6 @@ package com.example.demo.service.impl;
 
 import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Book;
-import com.example.demo.entity.User;
 import com.example.demo.mapper.BookMapper;
 import com.example.demo.service.BookService;
 import org.springframework.stereotype.Service;
@@ -50,19 +49,20 @@ public class BookServiceImpl implements BookService {
             books.sort(comper());
             redisUtils.set("student" + sid + "book",books);
         }
+        this.changeBookIsAlive(bid,0);
         bookMapper.borrowBook(bid,sid);
     }
 
     @Override
     public void changeBookIsAlive(int bid,int alive){
-        List<Book> books = (List<Book>) redisUtils.get("allisalivebook");
+        List<Book> books = (List<Book>) redisUtils.get("allBook");
         for(Book book:books) {
             if(book.getBid() == bid) {
                 book.setIsalive(alive);
                 break;
             }
         }
-        redisUtils.set("allisalivebook",books);
+        redisUtils.set("allBook",books);
         bookMapper.changeBookIsAlive(bid,alive);
     }
 
@@ -83,6 +83,7 @@ public class BookServiceImpl implements BookService {
             //按书编号排序
             redisUtils.set("student" + sid + "book",books);
         }
+        changeBookIsAlive(bid,1);
         bookMapper.returnBook(bid, sid);
     };
 

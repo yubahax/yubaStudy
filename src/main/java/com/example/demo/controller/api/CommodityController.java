@@ -26,6 +26,17 @@ public class CommodityController {
         return commodityService.getStudentCommodity(sid,type);
     }
 
+    @GetMapping("/getCommodity")
+    public List<Commodity> getCommodity(){
+        return commodityService.getCommodity();
+    }
+
+    @GetMapping("/getNewCommodity")
+    public  List<Commodity> getNewCommodity(){
+        List<Commodity> commodities = commodityService.getCommodity();
+        return commodities.subList(commodities.size()-2, commodities.size());
+    }
+
     @GetMapping("/deleteCommodity")
     public void deleteCommodity(@RequestParam("cid") int cid,@RequestParam("type") String type){
         int sid = redisUtils.getStudent().getSid();

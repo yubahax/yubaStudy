@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线上图书馆</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.zhimg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.zhimg.com/element-ui/lib/index.js"></script>
+    <script src="//unpkg.com/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//unpkg.com/element-ui@2.15.10/lib/index.js"></script>
+
+    <style>
+
+        body{
+            background: #f7f7f7;
+        }
+        .new{
+            width: 208px;
+            border: 1px solid #e3e3e3;
+            background: #fff;
+            margin-bottom: 10px;
+            box-sizing: content-box;
+            float: right;
+            font-size: 18px;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:hover{
+            background-color: #67C23A;
+
+        }
+        .el-header {
+            background:rgba(36, 59, 43, 1);
+            width: 100%;
+            text-align: center;
+            line-height: 70px;
+            color: #fff;
+        }
+        .listbox{
+            margin-left: 150px;
+            font-size: 20px;
+            border: 1px solid #e3e3e3;
+            background-color: #fff;
+            float: left;
+            width: 70%;
+        }
+        .searchbox
+        {
+            height: 60px;
+            margin-top: 2px;
+            margin-bottom: 15px;
+            line-height: 20px;
+
+        }
+        .searchbox dt{
+            float: left;
+        }
+        .searchbox dd{
+            position: relative;
+            float: left;
+            padding-left: 15px;
+        }
+        .book_list{
+            margin-right: 70px;
+            margin-left: 150px;
+            float: left;
+            width: 70%;
+        }
+        .book_list img{
+            float: left;
+            height: 170px;
+            width: 170px;
+        }
+        .book_list dl{
+            height: 200px;
+            margin-top: 2px;
+            font-size: 20px;
+            line-height: 55px;
+        }
+        .book_list dd{
+            position: relative;
+            float: left;
+            margin-left: 110px;
+        }
+        #input{
+            border: 1px solid #d2d2d2;
+            border-right: 0;
+            box-sizing: content-box;
+            color: #666;
+            font-size: 14px;
+            height: 18px;
+            line-height: 18px;
+            outline: 0;
+            padding: 9px 10px;
+        }
+        #submit{
+            background: #c00;
+            border: 0;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            height: 38px;
+            line-height: 38px;
+            text-align: center;
+            transition: all .2s linear 0s;
+            width: 89px;
+        }
+        .menu{
+            border-bottom: 1px solid #e3e3e3;
+            background: #fbfbfb;
+            height: 38px;
+            line-height: 38px;
+            font-size: 30px;
+            text-align: center;
+        }
+        .list_right li{
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="applib">
+<el-container>
+    <el-header>
+        <el-row>
+            <el-col :span="22">
+                <img  style="width: 55px;height: 55px;float: left" src="https://img0.baidu.com/it/u=1596605117,4242488425&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" alt="">
+                <h1>欢迎使用渝教育-线上图书馆</h1>
+            </el-col>
+        </el-row>
+    </el-header>
+    <div style="border-color: #f6f6f6;height: 110px">
+        <div style="margin: 20px;text-align: center">
+            <i style="font-size: 30px;">图书导航</i>
+        </div>
+        <div style="margin: 10px;text-align: center">
+            <input type="text" id="input"value="请输入关键字">
+            <input type="submit" id="submit" value="搜索" onclick="window.alert('功能维护中')">
+        </div>
+    </div>
+    <el-main>
+        <div style="width: 100%;height: 100%">
+            <el-backtop ></el-backtop>
+        </div>
+    <div style="height: 400px; ">
+       <div class="listbox">
+        <dl class="searchbox">
+            <dt>
+                国家:
+            </dt>
+            <dd>
+                <a href="">中国</a>
+                <a href="">美国</a>
+                <a href="">法国</a>
+                <a href="">俄罗斯</a>
+                <a href="">德国</a>
+                <a href="">英国</a>
+                <a href="">印度</a>
+            </dd>
+        </dl >
+            <dl class="searchbox">
+                <dt>
+                    出版日期:
+                </dt>
+                <dd>
+                    <a href="">2022</a>
+                    <a href="">2021</a>
+                    <a href="">2020</a>
+                    <a href="">2019</a>
+                    <a href="">2018</a>
+                    <a href="">2017</a>
+                    <a href="">2016</a>
+                    <a href="">2015</a>
+                    <a href="">2000</a>
+                    <a href="">1990</a>
+                </dd>
+            </dl>
+            <dl class="searchbox">
+                <dt>
+                    图书类型:
+                </dt>
+                <dd>
+                <a href="">恐怖</a>
+                <a href="">悬疑</a>
+                <a href="">武侠</a>
+                <a href="">文学</a>
+                <a href="">自传</a>
+                <a href="">科幻</a>
+                    <a href="">言情</a>
+                </dd>
+            </dl>
+            <dl class="searchbox">
+                <dt>
+                    字数:
+                </dt>
+                <dd>
+                    <a href="">100万字以上</a>
+                    <a href="">50万字以上</a>
+                    <a href="">20万字以上</a>
+                    <a href="">1万字以上</a>
+                    <a href="">短篇</a>
+
+                    <input type="text">
+                    -
+                    <input type="text">
+                    <input type="submit"value="确认" onclick="window.alert('功能维护中')">
+                </dd>
+            </dl>
+        </div>
+        <div style="float: left;width: 150px;height: 150px;margin-left: 100px;margin-top: 100px">
+            <el-progress type="circle" :percentage="62">
+            </el-progress>
+            <h3 style="position: absolute;top: 45%;left: 87%">未借出图书</h3>
+        </div>
+        </div>
+
+        <div class="book_list" >
+            <div class="menu">
+                <i>图书列表</i>
+            </div>
+
+            <div v-for="book in books" style="border-bottom: 1px solid #666666;">
+            <dl>
+                <dt>
+                    <img  src="https://img1.baidu.com/it/u=3768098621,3111432425&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500" alt="">
+                </dt>
+                <dd>
+                    <p><i class="el-icon-s-management"></i>书名：{{book.title}}</p>
+                    <p><i class="el-icon-user-solid"></i>作者：{{book.auther}}
+                        &nbsp; &nbsp;
+                        <i class="el-icon-menu"></i>类型：{{book.type}}
+                    </p>
+                    <p><i class="el-icon-school"></i>位置：{{book.address}}</p>
+                </dd>
+                <dd>
+                    <p><i class="el-icon-date"></i>发行日期</p>
+                    <p>{{book.time}}</p>
+                    <div class="block">
+                        <i class="el-icon-star-on"></i><span>评分</span>
+                    <el-rate v-model="value1"></el-rate>
+                </div>
+                </dd>
+                <dd>
+                    <p>当前状态</p>
+                    <div v-if="book.isalive==1">
+                        <p >
+                            未借出
+                        </p>
+                        <el-button type="primary" @click="borrowBook(book.bid)">借书</el-button>
+                    </div>
+
+                    <p  v-if="book.isalive==0"style="color: #F56C6C">
+                        已借出
+                    </p>
+
+                </dd>
+            </dl>
+            </div>
+
+        </div>
+        <div class="new" >
+            <h3 style="text-align: center">图书馆公告</h3>
+            <el-card>
+                <el-carousel indicator-position="none" arrow="never" direction="vertical" :interval="5000">
+                    <el-carousel-item v-for="i in 4" :key="i" class="notice_item">
+                        <p v-if="i == 1"> 为加强图书馆文献资源建设，
+                            实现读者与图书之间零距离，
+                            让读者直接参与到图书馆的采购环节，
+                            激发读者的阅读热情，满足广大师生个性化阅读需求，
+                            图书馆将举办“你挑书，我买单”新书现场闪借活动。</p>
+                        <p v-if="i == 2">
+                            为更好满足我校师生个性化、多元化的阅读需求，营造“多读书、读好书”的文化氛围，
+                            图书馆与“可知”电子书平台联合举办“你挑书，我买单”读者荐购有奖活动。立荐立阅立采立借，图书馆欢迎广大师生积极参与！</p>
+                        <p v-if="i == 3">
+                            图书一经荐购即可全文阅读，图书馆将结合师生选书需求，并根据馆藏情况进行采购，
+                            图书馆将从荐购者中随机抽取20名赠予精美小礼品。获奖名单将于活动后在图书馆微信公众号上进行公布，敬请关注，及时领取！</p>
+                        <p v-if="i == 4">
+                            图书馆在全力做好各方面防疫保障准备措施基础上，经学校疫情防控领导小组、后勤保障组检查合格后开馆，
+                            将严格执行馆舍定期全面清洁消毒、空调消毒、红外线自动测温、所还图书紫外线灯消毒等防控措施，确保读者安心到馆！</p>
+                    </el-carousel-item>
+                </el-carousel>
+            </el-card>
+        </div>
+
+
+    </el-main>
+</el-container>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: "#applib",
+        mounted: function () {
+            this.getBook();
+        },
+        data() {
+            return {
+                books: [
+                    {
+                        bid: 1,
+                        title: '我的奋斗',
+                        address: '图书馆一栋一层',
+                        auther: '李斯特',
+                        type: '武侠',
+                        time: '1999-03-01',
+                        isalive:1
+                    },
+
+                ],
+            }
+        },
+        methods: {
+            formatter(row, column) {
+                return row.address;
+            },
+            handleEdit(index, row) {
+                console.log(index, row);
+            },
+            handleDelete(index, row) {
+                console.log(index, row);
+            },
+            getBook(){
+                axios({
+                    //请求方式
+                    method:'get',
+                    //后端接口路径
+                    url:'/api/book/getAllBook',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                }).then((response) => {
+                    this.books=[];
+                    console.log(this.books);
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.books[i] = {
+                            title: response.data[i].title,
+                            auther: response.data[i].auther,
+                            address:response.data[i].address,
+                            bid:response.data[i].bid,
+                            type: response.data[i].type,
+                            time:response.data[i].time,
+                            isalive: response.data[i].isalive
+                        }
+                    }
+                }).catch((error) => {
+                });
+            },
+            borrowBook(bid){
+                axios({
+                    //请求方式
+                    method:'get',
+                    //后端接口路径
+                    url:'/api/book/borrowBook',
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                    params: {
+                        bid:bid
+                    }
+                }).then((response) => {
+                }).catch((error) => {
+                    //对error进行处理
+                });
+                setTimeout(()=> this.getBook(),150);
+            }
+        }
+    });
+
+</script>
+
+</html>

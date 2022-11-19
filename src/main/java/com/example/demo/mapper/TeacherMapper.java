@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.example.demo.entity.EmailBox;
 import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.Teacher;
@@ -49,4 +50,7 @@ public interface TeacherMapper extends BaseMapper<Teacher>{
 
     @Update("update teacher set tname = #{tname},sex = #{sex},age = #{age},education = #{education},idcard = #{idcard},appointment = #{appointment} where id = #{id}")
     void updateTeacherInfo(Teacher teacher);
+
+    @Insert("insert into emailbox (sid,txt,gettime,sendid) values(#{sid},#{txt},#{gettime},#{sendid})")
+    void checkStudent(EmailBox emailBox);
 }

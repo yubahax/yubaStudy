@@ -106,4 +106,14 @@ public class StudentPageController {
     public String sendCommodity(){
         return "saveCommodity";
     }
+
+    @RequestMapping("/ground")
+    public String schoolGround() {return  "ground";}
+
+    @RequestMapping("/library")
+    public String Library(){return "OnlineLibrary";}
+
+    @RequestMapping("/banshi")
+    public String banshi(){return "banshi";}
+
 }

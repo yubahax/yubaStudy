@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body style="background-color: whitesmoke;">
+<div id="main">
+    <div style="width: 100%;position: absolute">
+        <div>
+        <el-menu class="el-menu-my" mode="horizontal" >
+            <el-menu-item index="1">
+                <el-image :src="url"
+                style="width: 100px;height: 55px">
+                </el-image>
+            </el-menu-item>
+            <el-menu-item index="2"><a href="/user">个人中心</a></el-menu-item>
+             <el-menu-item index="3">
+                 <a href="/ground">    校广场  </a>
+            </el-menu-item>
+
+            <el-menu-item index="4">办事中心</el-menu-item>
+            <el-menu-item index="5"><a href="/library">线上图书馆</a></el-menu-item>
+            <el-menu-item index="6" style="padding-left: 100px">
+                <span style="background-color: whitesmoke;width: 100px;height: 30px;text-align: center;border: #333333 1px solid; font-size: 14px">搜索功能维护中</span>
+            </el-menu-item>
+            <el-menu-item index="7" style="padding-left: 0px">
+            <el-button disable><a v-bind:href="'/center/roomadd?buildingId='+this.users.id+'&buildingName='+this.users.word" >搜索</a></el-button>
+            </el-menu-item>
+        </el-menu>
+
+        </div>
+        <div style="position: absolute;top: 145px;width: 100%;">
+                <div style="position: absolute;left: 200px;top:50px;background-color: #69b3f0;width: 300px;height: 450px;">
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Foss.kuke99.com%2Fimg%2Fkukenews%2Fpc%2F2019-09-26%2F1569465000215908.png&refer=http%3A%2F%2Foss.kuke99.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671446664&t=8716f8aa96d2399768b46789985fa509"
+                style="width: 300px;height: 200px;filter: blur(2px);"
+                >
+                <p style="position: absolute;left: 80px;top: 240px;font-size: 32px;font-family: 幼圆" >请假申请</p>
+                </div>
+                <a href=""><img src="../static/img/logout.png" style="position:absolute;left: 320px;top: 400px;width: 50px;height: 50px"></a>
+        </div>
+
+        <div style="position: absolute;top: 145px;width: 100%;">
+            <div style="position: absolute;left: 600px;top:50px;background-color: #69b3f0;width: 300px;height: 450px;">
+                <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpica.zhimg.com%2Fv2-54c6ef77f648bfce6b321a5a71a8eaae_1440w.jpg%3Fsource%3D172ae18b&refer=http%3A%2F%2Fpica.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671448184&t=39029366a2b0aa0b63b3e950198af7ee"
+                     style="width: 300px;height: 200px;filter: blur(2px);"
+                >
+                <p style="position: absolute;left: 80px;top: 240px;font-size: 32px;font-family: 幼圆" >健康打卡</p>
+            </div>
+            <a href=""><img src="../static/img/logout.png" style="position:absolute;left: 730px;top: 400px;width: 50px;height: 50px"></a>
+        </div>
+
+        <div style="position: absolute;top: 145px;width: 100%;">
+            <div style="position: absolute;left: 1000px;top:50px;background-color: #69b3f0;width: 300px;height: 450px;">
+                <img src="https://img1.baidu.com/it/u=4104795350,3939924130&fm=253&fmt=auto&app=138&f=JPEG?w=402&h=500"
+                     style="width: 300px;height: 200px;filter: blur(2px);"
+                >
+                <p style="position: absolute;left: 80px;top: 240px;font-size: 32px;font-family: 幼圆" >学生邮箱</p>
+            </div>
+            <a href=""><img src="../static/img/logout.png" style="position:absolute;left: 1130px;top: 400px;width: 50px;height: 50px"></a>
+        </div>
+</div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#main",
+        mounted: function () {
+            this.getCommodity()
+            this.getNewCommodity()
+        },
+        data() {
+            return {
+                value: new Date(),
+                newCommodity:[],
+                users: {
+                    id: '30000',
+                    word: 'hellow wordl'
+                },
+                activeIndex: '1',
+                activeIndex2: '1',
+                url: 'https://imgsa.baidu.com/forum/pic/item/dab44aed2e738bd4b7ff803ca68b87d6267ff9e4.jpg',
+                commodity: [],
+            };
+        },
+        methods: {
+            getNewCommodity(){
+                axios({
+                    //请求方式
+                    method: 'get',
+                    //后端接口路径
+                    url: '/api/commodity/getNewCommodity',
+
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                }).then((response) => {
+                    this.newCommodity = [];
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.newCommodity[i] = {
+                            ctime: response.data[i].ctime,
+                            caddress: response.data[i].caddress,
+                            ctype:response.data[i].ctype,
+                            ctitle:response.data[i].ctitle,
+                        }
+                    }
+                }).catch((error) => {
+                });
+            },
+            getCommodity() {
+                axios({
+                    //请求方式
+                    method: 'get',
+                    //后端接口路径
+                    url: '/api/commodity/getCommodity',
+                    params: {
+
+                    }
+                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
+                }).then((response) => {
+                    this.commodity = [];
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.commodity[i] = {
+                            cid: response.data[i].cid,
+                            ctime: response.data[i].ctime,
+                            cmoney: response.data[i].cmoney,
+                            caddress: response.data[i].caddress,
+                            memo: response.data[i].memo,
+                            ctype:response.data[i].ctype,
+                            ctitle:response.data[i].ctitle,
+                        }
+                    }
+                }).catch((error) => {
+                });
+            }
+        }
+    });
+
+</script>
+<style>
+    .el-carousel__item h3 {
+        color: #475669;
+        font-size: 18px;
+        opacity: 0.75;
+        line-height: 300px;
+        margin: 0;
+    }
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
+</style>
+</html>
