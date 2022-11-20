@@ -118,7 +118,7 @@
                         email:this.registerFrom.email
                     }
                 }).then((response) => {
-
+                    this.$message('验证码发送成功');
                 }).catch((error) => {
                     //对error进行处理
                 });
@@ -141,6 +141,7 @@
                         code:this.registerFrom.code
                     }
                 }).then((response) => {
+                    this.$message('注册成功，请登录！');
                     mySwitch()
                 }).catch((error) => {
                 });

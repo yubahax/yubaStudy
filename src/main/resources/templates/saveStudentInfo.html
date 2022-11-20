@@ -101,6 +101,7 @@
                         room: this.form.room,
                     }
                 }).then((response) => {
+                    this.$message('学生信息保存成功');
                     setTimeout(() => window.location.href="/index", 200);
                 }).catch((error) => {
 

@@ -68,6 +68,7 @@
                         password: this.password,
                     }
                 }).then((response) => {
+                    this.$message('修改成功');
                     window.location.href="/user"
                 }).catch((error) => {
                 });

@@ -207,9 +207,10 @@
                         status:1
                     }
                 }).then((response) =>{
+                    this.$message('审批成功');
                 }).catch((error) => {
                 });
-                setTimeout(()=> this.getLeaveApprovalList(),500);
+                setTimeout(()=> this.getLeaveApprovalList(),200);
             },
             disagree(row){
                 axios({
@@ -223,9 +224,10 @@
                         status:-1
                     }
                 }).then((response) =>{
+                    this.$message('审批成功');
                 }).catch((error) => {
                 });
-                setTimeout(()=> this.getLeaveApprovalList(),500);
+                setTimeout(()=> this.getLeaveApprovalList(),200);
             },
             getLeaveApprovalList(){
                 axios({
