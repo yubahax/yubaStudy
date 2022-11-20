@@ -80,7 +80,8 @@
                           用户名<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                                         <el-dropdown-menu slot="dropdown">
-                                            <el-dropdown-item icon="el-icon-refresh-left">返回主页</el-dropdown-item><el-dropdown-item icon="el-icon-close">退出登录</el-dropdown-item>
+                                            <a href="/teacherInfo"><el-dropdown-item icon="el-icon-refresh-left">返回主页</el-dropdown-item></a>
+                                            <a href="/logout"><el-dropdown-item icon="el-icon-close">退出登录</el-dropdown-item></a>
                                         </el-dropdown-menu>
                                     </el-dropdown>
                                 </div>
@@ -100,7 +101,7 @@
                             <el-table-column
                                     prop="id"
                                     label="编号"
-                                    type="selection"
+
                                     width="200">
                             </el-table-column>
                             <el-table-column
@@ -203,17 +204,6 @@
                         sid:row.sid
                     }
                 }).then((response) => {
-                    this.stulist=[];
-                    console.log(this.stulist);
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.stulist[i] = {
-                            id: response.data[i].id,
-                            sid: response.data[i].sid,
-                            sname:response.data[i].sname,
-                            major:response.data[i].major,
-                            grade:response.data[i].grade,
-                        }
-                    }
                 }).catch((error) => {
                 });
             }
