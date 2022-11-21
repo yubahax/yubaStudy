@@ -4,6 +4,7 @@ import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.Teacher;
 import com.example.demo.vo.SubClass;
+import com.example.demo.vo.SubStudent;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface TeacherService {
      * @param grade 年级 整形变量
      * @return 当前专业年级的全部学生列表
      */
-    public List<Student> getStudentList(String major,int grade);
+    public List<Student> getStudentList(String major, int grade);
 
     /**
      * 根据学号sid查找某一学生

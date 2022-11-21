@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.example.demo.Util.RedisUtils;
 import com.example.demo.entity.Book;
 import com.example.demo.mapper.BookMapper;
@@ -95,6 +97,15 @@ public class BookServiceImpl implements BookService {
             redisUtils.set("student" + sid + "book", books);
         }
         return books;
-    };
+    }
+
+    @Override
+    public List<Book> getBookByType(String key, String value) {
+        Wrapper<Book> wrapper = new EntityWrapper<>();
+        wrapper.like(key, value);
+        return  bookMapper.selectList(wrapper);
+    }
+
+
 
 }

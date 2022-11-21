@@ -75,10 +75,6 @@
 <script>
     new Vue({
         el: "#main",
-        mounted: function () {
-            this.getCommodity()
-            this.getNewCommodity()
-        },
         data() {
             return {
                 value: new Date(),
@@ -94,53 +90,7 @@
             };
         },
         methods: {
-            getNewCommodity(){
-                axios({
-                    //请求方式
-                    method: 'get',
-                    //后端接口路径
-                    url: '/api/commodity/getNewCommodity',
 
-                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
-                }).then((response) => {
-                    this.newCommodity = [];
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.newCommodity[i] = {
-                            ctime: response.data[i].ctime,
-                            caddress: response.data[i].caddress,
-                            ctype:response.data[i].ctype,
-                            ctitle:response.data[i].ctitle,
-                        }
-                    }
-                }).catch((error) => {
-                });
-            },
-            getCommodity() {
-                axios({
-                    //请求方式
-                    method: 'get',
-                    //后端接口路径
-                    url: '/api/commodity/getCommodity',
-                    params: {
-
-                    }
-                    //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
-                }).then((response) => {
-                    this.commodity = [];
-                    for (let i = 0; i < response.data.length; i++) {
-                        this.commodity[i] = {
-                            cid: response.data[i].cid,
-                            ctime: response.data[i].ctime,
-                            cmoney: response.data[i].cmoney,
-                            caddress: response.data[i].caddress,
-                            memo: response.data[i].memo,
-                            ctype:response.data[i].ctype,
-                            ctitle:response.data[i].ctitle,
-                        }
-                    }
-                }).catch((error) => {
-                });
-            }
         }
     });
 

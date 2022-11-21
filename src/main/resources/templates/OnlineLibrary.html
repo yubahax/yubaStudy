@@ -164,13 +164,13 @@
                 国家:
             </dt>
             <dd>
-                <a href="">中国</a>
-                <a href="">美国</a>
-                <a href="">法国</a>
-                <a href="">俄罗斯</a>
-                <a href="">德国</a>
-                <a href="">英国</a>
-                <a href="">印度</a>
+                <a @click="getBookByType('nationality','中国')">中国</a>
+                <a @click="getBookByType('nationality','美国')">美国</a>
+                <a @click="getBookByType('nationality','法国')">法国</a>
+                <a @click="getBookByType('nationality','俄罗斯')">俄罗斯</a>
+                <a @click="getBookByType('nationality','德国')">德国</a>
+                <a @click="getBookByType('nationality','英国')">英国</a>
+                <a @click="getBookByType('nationality','印度')">印度</a>
             </dd>
         </dl >
             <dl class="searchbox">
@@ -178,16 +178,16 @@
                     出版日期:
                 </dt>
                 <dd>
-                    <a href="">2022</a>
-                    <a href="">2021</a>
-                    <a href="">2020</a>
-                    <a href="">2019</a>
-                    <a href="">2018</a>
-                    <a href="">2017</a>
-                    <a href="">2016</a>
-                    <a href="">2015</a>
-                    <a href="">2000</a>
-                    <a href="">1990</a>
+                    <a @click="getBookByType('time','2022')">2022</a>
+                    <a @click="getBookByType('time','2021')">2021</a>
+                    <a @click="getBookByType('time','2020')">2020</a>
+                    <a @click="getBookByType('time','2019')">2019</a>
+                    <a @click="getBookByType('time','2018')">2018</a>
+                    <a @click="getBookByType('time','2027')">2017</a>
+                    <a @click="getBookByType('time','2016')">2016</a>
+                    <a @click="getBookByType('time','2015')">2015</a>
+                    <a @click="getBookByType('time','2000')">2000</a>
+                    <a @click="getBookByType('time','1990')">1990</a>
                 </dd>
             </dl>
             <dl class="searchbox">
@@ -195,13 +195,13 @@
                     图书类型:
                 </dt>
                 <dd>
-                <a href="">恐怖</a>
-                <a href="">悬疑</a>
-                <a href="">武侠</a>
-                <a href="">文学</a>
-                <a href="">自传</a>
-                <a href="">科幻</a>
-                    <a href="">言情</a>
+                <a @click="getBookByType('type','散文')">散文</a>
+                <a @click="getBookByType('type','悬疑')">悬疑</a>
+                <a @click="getBookByType('type','武侠')">武侠</a>
+                <a @click="getBookByType('type','文学')">文学</a>
+                <a @click="getBookByType('type','自传')">自传</a>
+                <a @click="getBookByType('type','科幻')">科幻</a>
+                    <a @click="getBookByType('type','言情')">言情</a>
                 </dd>
             </dl>
             <dl class="searchbox">
@@ -209,12 +209,11 @@
                     字数:
                 </dt>
                 <dd>
-                    <a href="">100万字以上</a>
-                    <a href="">50万字以上</a>
-                    <a href="">20万字以上</a>
-                    <a href="">1万字以上</a>
-                    <a href="">短篇</a>
 
+                    <a @click="getBookByType('wordage','20万')">50万字以上</a>
+                    <a @click="getBookByType('wordage','10万')">20万字以上</a>
+                    <a @click="getBookByType('wordage','1万')">1万字以上</a>
+                    <a @click="getBookByType('wordage','1万以下')">短篇</a>
                     <input type="text">
                     -
                     <input type="text">
@@ -345,6 +344,30 @@
                 }).then((response) => {
                     this.books=[];
                     console.log(this.books);
+                    for (let i = 0; i < response.data.length; i++) {
+                        this.books[i] = {
+                            title: response.data[i].title,
+                            auther: response.data[i].auther,
+                            address:response.data[i].address,
+                            bid:response.data[i].bid,
+                            type: response.data[i].type,
+                            time:response.data[i].time,
+                            isalive: response.data[i].isalive
+                        }
+                    }
+                }).catch((error) => {
+                });
+            },
+            getBookByType(key,value){
+                axios({
+                    method:'post',
+                    url:'/api/book/getBookByType',
+                    params: {
+                        key:key,
+                        value:value
+                    }
+                }).then((response) => {
+                    this.books=[];
                     for (let i = 0; i < response.data.length; i++) {
                         this.books[i] = {
                             title: response.data[i].title,

@@ -38,4 +38,6 @@ public interface BookService {
      * @return 当前学生借阅的所有书本信息
      */
     public List<Book> getStudentBorrowedBooks(int sid);
+
+    public List<Book> getBookByType(String key,String value);
 }

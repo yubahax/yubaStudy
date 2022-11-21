@@ -8,6 +8,7 @@ import com.example.demo.entity.Teacher;
 import com.example.demo.entity.User;
 import com.example.demo.service.TeacherService;
 import com.example.demo.vo.SubClass;
+import com.example.demo.vo.SubStudent;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class TeacherController {
     }
 
     @GetMapping("/getStudentList")
-    public List<Student> getStudentList(@Param("major") String major,@Param("grade") int grade){
+    public List<Student> getStudentList(@Param("major") String major, @Param("grade") int grade){
         return teacherService.getStudentList(major,grade);
     }
 

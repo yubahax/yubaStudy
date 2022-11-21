@@ -37,9 +37,14 @@ public class BookController {
     }
 
     @GetMapping("/borrowBook")
-    public void boorwBook(@RequestParam("bid") int bid) {
+    public void borrowBook(@RequestParam("bid") int bid) {
         int sid = redisUtils.getStudent().getSid();
         bookService.borrowBook(bid,sid);
+    }
+
+    @GetMapping("/searchBook")
+    public List<Book> searchBook(@RequestParam("key") String key,@RequestParam("value") String value) {
+        return  bookService.getBookByType(key,value);
     }
 
 }
