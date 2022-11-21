@@ -63,7 +63,7 @@ public class UserController {
         service.modifyUserInfo(user);
     }
 
-    @RequestMapping(value = "/modifyStudentInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/modifyStudentInfo",method = RequestMethod.POST)
     public void modifyStudentInfo(@RequestParam("sid") int sid,
                                   @RequestParam("name") String sname,
                                   @RequestParam("sex") String sex,
