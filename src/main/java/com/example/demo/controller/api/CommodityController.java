@@ -10,6 +10,9 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author lianx
+ */
 @RestController
 @RequestMapping("/api/commodity")
 public class CommodityController {
@@ -34,7 +37,11 @@ public class CommodityController {
     @GetMapping("/getNewCommodity")
     public  List<Commodity> getNewCommodity(){
         List<Commodity> commodities = commodityService.getCommodity();
-        return commodities.subList(commodities.size()-2, commodities.size());
+        if (commodities.size()< 5) {
+            return commodities;
+        } else {
+            return commodities.subList(commodities.size() - 5, commodities.size());
+        }
     }
 
     @GetMapping("/deleteCommodity")

@@ -50,7 +50,7 @@ public class UserController {
         service.sendVerifyCode(email);
     }
 
-    @RequestMapping(value = "/user/modifyUserInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/modifyUserInfo",method = RequestMethod.GET)
     public void  modifyUserInfo(@RequestParam("password")String password,
                                 @RequestParam("email")String email){
         User user = new User();

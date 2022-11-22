@@ -18,11 +18,11 @@
                 <div >
                     <br/>
                     <el-form ref="form" :model="form" label-width="130px" >
-                        <el-form-item label="新的密码" style="" >
+                        <el-form-item label="新的密码">
                             <el-input v-model="form.password" style = "width:200px"></el-input>
                         </el-form-item>
                         <el-form-item label="确认密码">
-                            <el-input  v-modle="form.recheck" style = "width:200px"></el-input>
+                            <el-input  v-model="form.recheck" style = "width:200px"></el-input>
                         </el-form-item>
                         <el-form-item label="新的邮箱">
                             <el-input v-model="form.email" style = "width:200px"></el-input>
@@ -52,20 +52,20 @@
                 email: '',
                 recheck: '',
                 password: '',
-            }
+            },
         },
         methods: {
             onSubmit() {
                 axios({
                     //请求方式
-                    method:'post',
+                    method:'get',
                     //后端接口路径
                     url:'/api/user/modifyUserInfo',
                     //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
                     params: {
-                        //attributeName为属性名，value为属性值
-                        email: this.email,
-                        password: this.password,
+                        password: this.form.password,
+                        // email: this.form.email,
+
                     }
                 }).then((response) => {
                     this.$message('修改成功');

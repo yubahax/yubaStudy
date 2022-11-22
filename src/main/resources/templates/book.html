@@ -69,7 +69,6 @@
                 <h1 align="center">渝教育 个人中心</h1>
               </div></el-col>
               <el-col :span="4"><div class="grid-content bg-purple-light">
-                <!-- 头像 -->
                 <template>
                   <div class="demo-type">
                     <div>
@@ -85,8 +84,6 @@
                       </el-dropdown>
                     </div>
                   </div>
-
-
                 </template>
               </div></el-col>
             </el-row>
@@ -107,9 +104,7 @@
                   <el-button id="el-button" @click="returnBook(book.bid)" type="danger">还书</el-button>
                 </div>
               </div>
-
             </template>
-
           </el-main>
         </el-container>
       </el-container>
@@ -151,7 +146,6 @@
          //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
        }).then((response) => {
          this.books=[];
-
          for (let i = 0; i < response.data.length; i++) {
            this.books[i] = {
              title: response.data[i].title,
