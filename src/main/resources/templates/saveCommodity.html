@@ -183,7 +183,6 @@ new Vue({
               memo:this.form.memo,
               caddress:this.form.caddress
           },
-          //注意这里使用的是params,该属性负责把属性名和属性值添加到url后面，一般和get配合使用，但也能    和post配合使用
         }).then((response) => {
           this.$message('帖子发布成功');
         }).catch((error) => {

@@ -1,8 +1,11 @@
 package com.example.demo.controller.api;
 
 import com.example.demo.Util.RedisUtils;
+import com.example.demo.entity.EmailBox;
+import com.example.demo.entity.LeaveApproval;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +28,8 @@ public class UserController {
     @Resource
     RedisUtils redisUtils;
 
+    @Resource
+    EmailService emailService;
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public boolean register(@RequestParam("username")String name,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("code") String code) {
        if (service.verifiyCodeIsTrue(email,code)) {
@@ -89,4 +94,22 @@ public class UserController {
         return redisUtils.getStudent();
     }
 
+    @GetMapping("/user/addLeaveApproval")
+    public void addLeaveApproval(@RequestBody LeaveApproval leaveApproval){
+        int sid  = redisUtils.getStudent().getSid();
+        studentService.addLeaveApproval(leaveApproval);
+
+    }
+
+    @GetMapping("/user/addDailyCheck")
+    public void addDailyCheck(@RequestParam("daytemp") String daytemp,@RequestParam("nighttemp") String nighttemp){
+        int sid = redisUtils.getStudent().getSid();
+        studentService.addDailyCheck(sid,daytemp,nighttemp);
+
+    }
+
+    @GetMapping("/user/getEmail")
+    public List<EmailBox> getEamil() {
+        return emailService.getStudentEmail();
+    }
 }
