@@ -39,5 +39,11 @@ public interface BookService {
      */
     public List<Book> getStudentBorrowedBooks(int sid);
 
+    /**
+     * 图书馆查询接口 根据key value查询对应图书信息
+     * @param key 查询字段
+     * @param value 字段值
+     * @return 查询出的图书信息
+     */
     public List<Book> getBookByType(String key,String value);
 }

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 生产环境版本，优化了尺寸和速度 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="../static/css/stuemail.css">
+    <title>Document</title>
+</head>
+<body>
+
+        <div class="box">
+            <div id="app">
+                <el-container>
+                    <el-header><span class="biaoti">学生邮箱</span></el-header>
+                    <el-main>
+                        <div >
+                            <template>
+                                <el-table
+
+                                        :data="EmailList"
+                                        height="350px"
+                                        style="width:100%;">
+                                    <el-table-column
+                                            label="编号"
+                                            width="120"
+                                            type="index"
+                                    >
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="内容"
+                                            width="330"
+                                            >
+                                        <template slot-scope="scope">
+                                            <el-popover trigger="hover" placement="top">
+                                                <p> {{ scope.row.txt}}</p>
+                                                <div slot="reference" class="name-wrapper">
+                                                    <el-tag
+                                                            size="medium"
+                                                    >
+                                                        {{scope.row.txt.length>20?scope.row.txt.substring(0,20)+'...':scope.row.txt}}
+                                                    </el-tag>
+                                                </div>
+                                            </el-popover>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="sendtime"
+                                            label="发送时间"
+                                            width="200">
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                        </div>
+                        <div style="float: right">
+                        <el-button
+                                type="danger" round @click="deleteAllEmail() ">一键删除
+                        </el-button>
+                        </div>
+                    </el-main>
+                </el-container>
+        </div>
+
+        </div>
+
+    <script>
+        new Vue({
+            el:"#app",
+            mounted:function (){
+                this.getEmailList()
+            },
+            data() {
+                return {
+                    ok:1,
+                    EmailId:'',
+                    EmailList:[{
+                        eid:'123',
+                        txt:'123',
+                        sendtime:'123',
+
+                    }
+                    ]
+                }
+            },
+            methods: {
+                getEmailList() {
+                    axios({
+                        method: 'get',
+                        url: '/api/user/getEmail',
+                    }).then((response) => {
+                        this.EmailList = [];
+                        this.EmailId='';
+                        for (let i = 0; i < response.data.length; i++) {
+                            this.EmailId+=response.data[i].eid+"-"
+                            this.EmailList[i] ={
+                                eid: response.data[i].eid,
+                                txt: response.data[i].txt,
+                                sendtime: response.data[i].gettime,
+
+                        }
+                        }
+                        console.log(this.EmailId)
+                        console.log(this.EmailList)
+                    }).catch((error) => {
+                        console.log(this.EmailList)
+                    });
+                },
+
+                deleteAllEmail(){
+                    axios({
+                        method:'get',
+
+                        url:'/api/user/deleteEmail',
+                        params:{
+                            eids:this.EmailId
+                        }
+                    }).then((response) => {
+                        this.$message('删除成功');
+                        setTimeout(() => this.getEmailList(), 100);
+                    }).catch((error) => {
+                    });
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

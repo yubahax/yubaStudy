@@ -60,5 +60,11 @@ public interface TeacherService {
      */
     public void modifyTeacherInfo(Teacher teacher);
 
+
+    /**
+     * 给未健康打卡的学生发送提示邮件
+     * @param sid 学生学号
+     * @param id 教师id
+     */
     public void checkStudent(int sid,int id);
 }

@@ -21,8 +21,10 @@ public interface EmailService {
 
     /**
      * 学生端调用，删除自己的邮件
-     * @param eid 邮件编号
+     * @param strs 邮件编号
      */
-    public void deleteStudentEmail(int eid);
+    public void deleteStudentEmail(List<String> strs);
+
+
 
 }

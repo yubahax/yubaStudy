@@ -12,7 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -111,5 +113,12 @@ public class UserController {
     @GetMapping("/user/getEmail")
     public List<EmailBox> getEamil() {
         return emailService.getStudentEmail();
+    }
+
+    @GetMapping("/user/deleteEmail")
+    public void deleteEmail(@RequestParam("eids") String eid) {
+        String[] strings = eid.split("-");
+        List<String> str = Arrays.asList(strings);
+        emailService.deleteStudentEmail(str);
     }
 }

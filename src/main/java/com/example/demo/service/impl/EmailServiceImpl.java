@@ -10,6 +10,9 @@ import com.example.demo.service.EmailService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 @Service
@@ -46,22 +49,18 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void deleteStudentEmail(int eid) {
+    public void deleteStudentEmail(List<String> strs) {
         int sid = redisUtils.getStudent().getSid();
         List<EmailBox> emailBoxes = (List<EmailBox>) redisUtils.get("student"+sid+"emailBoxes");
         //获取emailBoxes的缓存
+        int i = 0;
         if(emailBoxes != null){
-            Iterator<EmailBox> iterator = emailBoxes.iterator();
-            while(iterator.hasNext()) {
-                EmailBox emailBox = iterator.next();
-                if(emailBox.getEid() == eid) {
-                    iterator.remove();
-                    //从缓存中删除邮件信息
-                    break;
-                }
-            }
+            emailBoxes = null;
             redisUtils.set("student"+sid+"emailBoxes",emailBoxes);
+
         }
-        emailBoxMapper.deleteById(eid);
+        emailBoxMapper.deleteBatchIds(strs);
     }
+
+
 }

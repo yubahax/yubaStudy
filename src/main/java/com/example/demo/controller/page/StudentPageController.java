@@ -21,8 +21,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class StudentPageController {
     @Resource
-    StringRedisTemplate stringRedisTemplate;
-    @Resource
     UserService userService;
     @Resource
     StudentService studentService;
@@ -47,10 +45,6 @@ public class StudentPageController {
         }
     }
 
-    @RequestMapping("/test")
-    public String test(){
-        return "test";
-    }
     @RequestMapping(value = "/api/saveStudentInfo",method = RequestMethod.POST)
     public String saveStudentInfo(@RequestParam("sid") int sid,
                                 @RequestParam("name") String sname,
@@ -115,5 +109,8 @@ public class StudentPageController {
 
     @RequestMapping("/banshi")
     public String banshi(){return "banshi";}
+
+    @RequestMapping("/email")
+    public String email() {return "StudentEmail";}
 
 }
