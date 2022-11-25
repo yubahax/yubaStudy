@@ -32,10 +32,10 @@ public class Book implements Serializable {
     private String type;
 
     @TableField("wordage")
-    private int wordage;
+    private String wordage;
 
     @TableField("nationality")
-    private int nationality;
+    private String nationality;
 
     @TableField("time")
     private int time;

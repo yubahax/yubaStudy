@@ -24,9 +24,11 @@ public class StudentPageController {
     UserService userService;
     @Resource
     StudentService studentService;
-
     @Resource
     RedisUtils redisUtils;
+
+    static final String ROLE_ADMIN= "admin";
+
     @RequestMapping("/index")
     public String index() {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -37,7 +39,9 @@ public class StudentPageController {
             user = userService.selectUserByName(name);
             redisUtils.set(name,user);
         }
-        if ("admin".equals(user.getRole())) {return "redirect:/teacherInfo";}
+        if (ROLE_ADMIN.equals(user.getRole())) {
+            return "redirect:/teacherInfo";
+        }
         if (studentService.ifStudentInfoIsExist(user.getId())) {
             return "index";
         } else {
@@ -52,17 +56,18 @@ public class StudentPageController {
                                 @RequestParam("age") int age,
                                 @RequestParam("grade") int grade,
                                 @RequestParam("major") String major,
-                                @RequestParam("room") String room,HttpSession session) {
-        Student student = new Student();
+                                @RequestParam("room") String room) {
+
         User user = redisUtils.getUser();
-        student.setAge(age);
-        student.setSex(sex);
-        student.setRoom(room);
-        student.setMajor(major);
-        student.setId(user.getId());
-        student.setSname(sname);
-        student.setSid(sid);
-        student.setGrade(grade);
+        Student student = new Student()
+                .setAge(age)
+                .setSex(sex)
+                .setRoom(room)
+                .setMajor(major)
+                .setId(user.getId())
+                .setSname(sname)
+                .setSid(sid)
+                .setGrade(grade);
         studentService.saveStudentInfo(student);
         return "redirect:/index";
     }
@@ -105,7 +110,7 @@ public class StudentPageController {
     public String schoolGround() {return  "ground";}
 
     @RequestMapping("/library")
-    public String Library(){return "OnlineLibrary";}
+    public String library() {return "OnlineLibrary";}
 
     @RequestMapping("/banshi")
     public String banshi(){return "banshi";}
@@ -113,4 +118,9 @@ public class StudentPageController {
     @RequestMapping("/email")
     public String email() {return "StudentEmail";}
 
+    @RequestMapping("/leave")
+    public String leave() {return "addLeave";}
+
+    @RequestMapping("/check")
+    public String check() {return "addcheck";}
 }

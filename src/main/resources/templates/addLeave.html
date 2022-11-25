@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 生产环境版本，优化了尺寸和速度 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <link rel="stylesheet" href="../static/css/leave.css">
+    <title>Document</title>
+</head>
+<body>
+
+        <div class="box">
+            <div id="app">
+                <el-container>
+                    <el-header><span class="biaoti">离校报备系统</span></el-header>
+                    <el-main>
+
+                      <div>
+                    <div>
+                        <template>
+                          <span class="ziti-font">外出地址</span>
+                          <el-input
+                          placeholder="外出地址"
+                          v-model="place"
+                          clearable>
+                        </el-input>
+                        </template>
+                    </div>
+                    <div>
+                      <template>
+                        <span class="ziti-font">离校原因</span>
+                        <el-input
+                        placeholder="离校原因"
+                        v-model="reason"
+                        clearable>
+                      </el-input>
+                      </template>
+                    </div>
+
+                    <div>
+                      <template>
+                        <div class="block">
+                          <span class="ziti-font">离校日期</span>
+                          <el-date-picker
+                            v-model="starttime"
+                            type="date"
+                            placeholder="选择日期">
+                          </el-date-picker>
+                        </div>
+                      </template>
+                    </div>  
+                    <div>
+                      <template>
+                        <div class="block">
+                          <span class="ziti-font">返校日期</span>
+                          <el-date-picker
+                            v-model="endtime"
+                            type="date"
+                            placeholder="返校日期">
+                          </el-date-picker>
+                        </div>
+                      </template>
+                    </div>
+                    <div class="submit">
+                      <el-button @click="addApproval()" >提交</el-button>
+                    </div>
+                      </div>
+                    </el-main>
+                </el-container>
+        </div>
+
+        </div>
+
+    <script>
+        var Main = {
+    data () {
+      return {
+        sid: '',
+        place: '',
+        reason: '',
+        lid: '',
+        sendtime: '',
+        starttime:'',
+        endtime: '',
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+      };
+    },
+            methods:{
+                addApproval(){
+                    axios({
+                        //请求方式
+                        method:'post',
+                        //后端接口路径
+                        url:'/api/user/addLeaveApproval',
+                        data:{
+                            sid: this.sid,
+                            place: this.place,
+                            reason: this.reason,
+                            lid: this.lid,
+                            sendtime: this.sendtime,
+                            starttime:this.starttime,
+                            endtime: this.endtime,
+                        },
+                    }).then((response) =>{
+                        this.$message('申请成功');
+                    }).catch((error)=>{
+                        console.log(this.data)
+                    });
+                }
+            }
+  }
+var Ctor = Vue.extend(Main)
+new Ctor().$mount('#app')
+
+    </script>
+    
+</body>
+</html>

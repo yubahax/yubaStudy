@@ -96,9 +96,9 @@ public class UserController {
         return redisUtils.getStudent();
     }
 
-    @GetMapping("/user/addLeaveApproval")
+    @PostMapping("/user/addLeaveApproval")
     public void addLeaveApproval(@RequestBody LeaveApproval leaveApproval){
-        int sid  = redisUtils.getStudent().getSid();
+
         studentService.addLeaveApproval(leaveApproval);
 
     }

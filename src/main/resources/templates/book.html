@@ -149,10 +149,11 @@
          for (let i = 0; i < response.data.length; i++) {
            this.books[i] = {
              title: response.data[i].title,
-             auther: response.data[i].auther,
+             auther: response.data[i].author,
              address:response.data[i].address,
              bid:response.data[i].bid,
              time:response.data[i].time,
+             type:response.data[i].type,
            }
          }
        }).catch((error) => {

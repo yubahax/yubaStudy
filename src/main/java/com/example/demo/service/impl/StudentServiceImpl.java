@@ -63,10 +63,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void addLeaveApproval(LeaveApproval leaveApproval) {
+        int sid  = redisUtils.getStudent().getSid();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String sendtime = format.format(date);
         leaveApproval.setSendtime(sendtime);
+        leaveApproval.setSid(sid);
         leaveApprovalMapper.insert(leaveApproval);
     }
 

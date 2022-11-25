@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    /* background-color: #ffe4f8; */
+    background: url("../img/bg.webp") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -o-background-size: cover;                
+     background-size: cover;
+
+  }
+
+
+/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 Light";font-weight: 300;src: url("//at.alicdn.com/wf/webfont/IOPwTLqcCxGM/ZzWoG1xuhGGpHtBbacwqn.woff2") format("woff2"),
+  url("//at.alicdn.com/wf/webfont/IOPwTLqcCxGM/AuIjcXvZYZbeDGp2IvJXf.woff") format("woff");
+  font-display: swap;
+}
+
+
+.box{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 700px;
+  height: 500px;
+  /* display: flex; */
+  /* flex-wrap:wrap; */
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  border-radius: 4px
+
+  
+}
+
+
+
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+}
+.el-col {
+  border-radius: 4px;
+  font-size: 20px;
+  /* font-weight:900; */
+  font-family: "思源宋体 Light";
+  font-weight: 500;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+  opacity:0.3;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+
+.el-header, .el-footer {
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+
+
+.el-main {
+
+  color: #333;
+  /* text-align: center; */
+  line-height: 20px;
+}
+
+.el-input{
+  width: 250px;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+a{
+  text-decoration: none;
+}
+
+.biaoti{
+  font-size: 30px;
+  font-weight:540;
+  color: #bc74e1;
+  font-family: "思源宋体 Light";
+  font-weight: 300;
+
+}
+.ziti-font{
+  color: #7c53db;
+  font-family: "思源宋体 Light";
+  font-weight: 300;
+
+}
+
+.icon{
+  width: 10px;
+}
+
+.id{
+  position: relative;
+  left: 17px;
+}
+
+
+.input{
+  width: 500px;
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 生产环境版本，优化了尺寸和速度 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <link rel="stylesheet" href="../static/css/check.css">
+    <title>Document</title>
+</head>
+<body>
+
+        <div class="box">
+            <div id="app">
+                <el-container>
+                    <el-header><span class="biaoti">每日健康打卡</span></el-header>
+                    <el-main>
+
+                      <div>
+                        <template>
+                          <span class="ziti-font">早间体温</span>
+                          <el-input
+                          placeholder="早间体温"
+                          v-model="daytemp"
+                          clearable>
+                        </el-input>
+                        </template>
+                      </div>
+                      <div>
+                        <template>
+                          <span class="ziti-font">晚间体温</span>
+                          <el-input
+                          placeholder="晚间体温"
+                          v-model="nighttemp"
+                          clearable>
+                        </el-input>
+                        </template>
+                      </div>
+
+                    <div>
+                        <span class="ziti-font">健康码/行程码上传</span>
+                      <el-upload
+                        class="upload-demo"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-remove="beforeRemove"
+                        multiple
+                        :limit="3"
+                        :on-exceed="handleExceed"
+                        :file-list="fileList">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                      </el-upload>
+                    </div>
+
+                        <div class="submit">
+                            <el-button @click="addCheck()" >提交</el-button>
+                        </div>
+                    </el-main>
+                </el-container>
+        </div>
+
+        </div>
+
+    <script>
+        var Main = {
+    data () {
+      return {
+        did: '',
+        sid: '',
+        daytemp : '',
+        nighttemp : '',
+        checktime:'',
+        fileList: [],
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        }   
+      };
+      
+    },
+    methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+        addCheck(){
+            axios({
+                //请求方式
+                method:'get',
+                //后端接口路径
+                url:'/api/user/addDailyCheck',
+                params:{
+                    daytemp:this.daytemp,
+                    nighttemp:this.nighttemp
+
+        },
+        }).then((response) => {
+                this.$message('打卡成功');
+            }).catch((error) => {
+                //对error进行处理
+            });
+        }
+    }
+  }
+var Ctor = Vue.extend(Main)
+new Ctor().$mount('#app')
+
+    </script>
+    
+</body>
+</html>
